@@ -54,6 +54,5 @@ int main()
             cover[from]=0;
         }
     }
-
     return 0;
 }
