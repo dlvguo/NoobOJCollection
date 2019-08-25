@@ -1,28 +1,41 @@
 #include <iostream>
+#include <vector>
 #include <cstring>
 using namespace std;
 
-class Car
+class A
 {
-    public:
-    static int i;
-    static void Add(){
-        i++;
-        cout<<i<<endl;
-    }
-    void Fuck(){
-        cout<<"I am a test"<<endl;
-        Add();
-    }
-};
-int Car::i = 2;
+private:
+    int a;
+    int c = 55;
 
+public:
+    A(int a, int c = 789)
+    {
+        this->a = a;
+        this->c = c;
+        cout << "A:" << a << endl;
+    }
+
+    A(const A &a)
+    {
+        this->a = a.a;
+        cout << "FUCKa" << endl;
+    }
+    void print()
+    {
+        cout << "B:" << a << endl;
+        cout << "C:" << c << endl;
+    }
+    ~A(){
+        cout<<"FUCk";
+    }
+    
+};
 
 int main()
 {
-    Car c;
-    c.Add();
-    c.Fuck();
-    cout<<Car::i<<endl;
-    
+    //A a(6, 1), c = a, b(666,999);
+    A b = A(6,1);
+    b.print();
 }
