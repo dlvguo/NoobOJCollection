@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 using namespace std;
 typedef int Element;
 
@@ -15,23 +16,62 @@ bool IsEmpty(LinkList L)
 }
 
 //初始化链表 带头节点
-void InitList(LinkList &L,bool isHead=true)
+void InitList(LinkList &L, bool isHead = true)
 {
-    if(isHead){
+    if (isHead)
+    {
+        L = new Node;
+        L->data = -1;
+        L->next = NULL;
+    }
+    else
+    {
+        L = new Node;
+        L->data = -1;
+    }
+    Node *rear = L;
+    int a;
+    while (cin >> a)
+    {
+        if (!isHead && L->data == -1)
+        {
+            L->data = a;
+            L->next = NULL;
+            continue;
+        }
+        Node *d = new Node;
+        d->data = a;
+        d->next = NULL;
+        rear->next = d;
+        rear = rear->next;
+    }
+}
+
+//初始化链表 带头节点
+void InitList(LinkList &L,  int b[],int l,bool isHead = true)
+{
+    int i = 0;
+    //初始化
     L = new Node;
     L->data = -1;
-    L->next = NULL;}
-    Node* rear=L;
+    L->next = NULL;
+    Node *rear = L;
     int a;
-    while (cin>>a)
+    while (i < l)
     {
-        Node* d=new Node;
-        d->data=a;
-        d->next=NULL;
-        rear->next=d;
-        rear=rear->next;
+        if (!isHead && L->data == -1)
+        {
+            L->data =b[i++];
+            L->next = NULL;
+
+            continue;
+        }
+        Node *d = new Node;
+        d->data = b[i++];
+        d->next = NULL;
+        rear->next = d;
+        rear = rear->next;
     }
-    
 }
 
 //获得元素个数
@@ -140,14 +180,14 @@ void ListDelete(LinkList &L, int i, Node *&e)
 }
 
 //输出所有值
-void PrintList(LinkList L,bool isHead=true){
-    if(isHead)
-        L=L->next;
+void PrintList(LinkList L, bool isHead = true)
+{
+    if (isHead)
+        L = L->next;
     while (L)
     {
-        cout<<L->data<<" ";
-        L=L->next;
+        cout << L->data << " ";
+        L = L->next;
     }
-    cout<<endl;
-    
+    cout << endl;
 }
