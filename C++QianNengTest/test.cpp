@@ -12,11 +12,6 @@ public:
         v++;
         return *this;
     }
-    C addOne(){
-        C temp;
-        temp.v=v++;
-        return temp;
-    }
     void print(){
         cout<<v<<endl;
     }
