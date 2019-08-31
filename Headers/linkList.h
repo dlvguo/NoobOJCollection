@@ -3,11 +3,23 @@
 using namespace std;
 typedef int Element;
 
+
+typedef struct DNode
+{
+    Element data;
+    DNode *next;
+    DNode *prior;
+} * DLinkList;
+
+
+#pragma region //单链表部分
+
 typedef struct Node
 {
     Element data;
     Node *next;
 } * LinkList;
+
 
 //判断是否为空
 bool IsEmpty(LinkList L)
@@ -191,3 +203,6 @@ void PrintList(LinkList L, bool isHead = true)
     }
     cout << endl;
 }
+
+#pragma endregion
+
