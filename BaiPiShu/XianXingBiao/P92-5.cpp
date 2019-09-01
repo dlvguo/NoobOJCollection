@@ -1,70 +1,60 @@
 #include <iostream>
-#include "../../Headers/linkList.h"
+#include "../../Headers/dlinkList.h"
 using namespace std;
-void Reverse(LinkList &L);
-//二进制创建 头插法
-void CreatBin(LinkList &L, int n)
+
+//输入二进制数创建
+void CreatBin(DLinkList &D)
 {
-    L = new Node;
-    L->data = -1;
-    L->next = NULL;
-    while (n)
+    D = new DNode;
+    D->data = -1;
+    D->next = D;
+    D->prior = D;
+    DNode *r = D;
+    char *str;
+    cin >> str;
+    while ((*str) != '\0')
     {
-        int dig = n % 2;
-        n /= 2;
-        Node *node = new Node;
-        node->data = dig;
-        node->next = L->next;
-        L->next = node;
+        DNode *d = new DNode;
+        d->data = ((int)(*str) - 48);
+        r->next = d;
+        d->prior = r;
+        r = d;
+        str++;
     }
+    r->next=D;
+    D->prior=r;
 }
 
-void Add1(LinkList L)
+void Add1(DLinkList &D)
 {
-    //倒置一遍+1 然后再倒一遍？
-    Reverse(L);
-    //代表最后一个指针
-    Node *p = L->next;
-    p->data++;
-    while (p && p->data == 2)
+    DNode *r = D->prior;
+    r->data++;
+    //如果有进位和不等于头节点 一直进1
+    while (r != D && r->data == 2)
     {
-        p->data = 0;
-        if (p->next != NULL)
-            p->next->data++;
-        else
-        {
-            Node *n = new Node;
-            n->data = 1;
-            n->next = NULL;
-            p->next = n;
-            break;
-        }
-        p=p->next;
+        r->data = 0;
+        r = r->prior;
+        r->data++;
     }
-    Reverse(L);
-}
-
-//转置LinkList
-void Reverse(LinkList &L)
-{
-    Node *p = L->next, *temp;
-    L->next = NULL;
-    while (p)
+    //判断是否要加一个新节点即判断是否走到了头节点
+    if (r == D)
     {
-        temp = p;
-        p = p->next;
-        temp->next = L->next;
-        L->next = temp;
+        DNode *d = new DNode;
+        d->data = 1;
+        d->next = D->next;
+        d->prior = D;
+        D->next->prior = d;
+        D->next = d;
     }
 }
 
 int main()
 {
-    freopen("C:/NoobOJCollection/BaiPiShu/XianXingBiao/P92-4.txt", "r", stdin);
-    LinkList L;
-    CreatBin(L, 3);
-    PrintList(L);
-    Add1(L);
-    PrintList(L);
+    //freopen("C:/NoobOJCollection/BaiPiShu/XianXingBiao/P92-5.txt", "r", stdin);
+    DLinkList D;
+    CreatBin(D);
+    PrintDLinkList(D, true);
+    Add1(D);
+    PrintDLinkList(D, true);
     return 0;
 }
