@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../Headers/linkList.h"
+#include "../../Headers/linkList.h"
 using namespace std;
 
 void reverse(LinkList &L)
