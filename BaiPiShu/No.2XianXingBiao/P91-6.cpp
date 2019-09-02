@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../Headers/linkList.h"
+#include "../../Headers/linkList.h"
 using namespace std;
 
 //
@@ -24,10 +24,11 @@ void FindMax(LinkList L)
 
 int main()
 {
-    freopen("C:/NoobOJCollection/BaiPiShu/XianXingBiao/P91-6.txt", "r", stdin);
+    freopen("C:/NoobOJCollection/BaiPiShu/No.2XianXingBiao/P91-6.txt", "r", stdin);
     LinkList L;
     InitList(L);
     PrintList(L);
     FindMax(L);
-    PrintList(L,false);
+    PrintList(L);
+    return 0;
 }
