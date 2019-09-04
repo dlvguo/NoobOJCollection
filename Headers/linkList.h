@@ -3,14 +3,12 @@
 using namespace std;
 typedef int Element;
 
-
 typedef struct DNode
 {
     Element data;
     DNode *next;
     DNode *prior;
 } * DLinkList;
-
 
 #pragma region //单链表部分
 
@@ -20,7 +18,6 @@ typedef struct Node
     Node *next;
 } * LinkList;
 
-
 //判断是否为空
 bool IsEmpty(LinkList L)
 {
@@ -28,7 +25,7 @@ bool IsEmpty(LinkList L)
 }
 
 //初始化链表 带头节点
-void InitList(LinkList &L, bool isHead = true)
+void InitList(LinkList &L, bool isHead = true, int num = 0)
 {
     if (isHead)
     {
@@ -43,6 +40,25 @@ void InitList(LinkList &L, bool isHead = true)
     }
     Node *rear = L;
     int a;
+    if (num)
+    {
+        while (num--)
+        {
+            cin>>a;
+            if (!isHead && L->data == -1)
+            {
+                L->data = a;
+                L->next = NULL;
+                continue;
+            }
+            Node *d = new Node;
+            d->data = a;
+            d->next = NULL;
+            rear->next = d;
+            rear = rear->next;
+        }
+        return;
+    }
     while (cin >> a)
     {
         if (!isHead && L->data == -1)
@@ -60,7 +76,7 @@ void InitList(LinkList &L, bool isHead = true)
 }
 
 //初始化链表 带头节点
-void InitList(LinkList &L,  int b[],int l,bool isHead = true)
+void InitList(LinkList &L, int b[], int l, bool isHead = true)
 {
     int i = 0;
     //初始化
@@ -73,7 +89,7 @@ void InitList(LinkList &L,  int b[],int l,bool isHead = true)
     {
         if (!isHead && L->data == -1)
         {
-            L->data =b[i++];
+            L->data = b[i++];
             L->next = NULL;
 
             continue;
@@ -205,4 +221,3 @@ void PrintList(LinkList L, bool isHead = true)
 }
 
 #pragma endregion
-
