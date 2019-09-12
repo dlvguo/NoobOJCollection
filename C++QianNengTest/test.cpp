@@ -1,45 +1,41 @@
-#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include<iostream>
 using namespace std;
-#define PI 5.5
-#define S(X) PI *X *X
-class C
-{
-public:
-    int v;
+#define LIST_INIT_SIZE 100
+#define LISTINCREMENT 10
 
-public:
-    C()
-    {
-        v = 0;
-    }
-    C &addOne()
-    {
-        v++;
-        return *this;
-    }
-    void print()
-    {
-        cout << v << endl;
-    }
-};
-typedef struct test
-{
-    //int num;
-    //char name[20];
-    //char sex;
-    //int age;
-    char s[5];
-    char l;
-    float score;
-    char sex;
-    double b;
-    //char addr[30];
+typedef int ElemType;
 
-    /* data */
-} test2, test3;
+typedef struct
+{
+    ElemType *elem;
+    int length;
+    int listsize;
+} SqList;
+
+int init(SqList &L)
+{
+    L.elem = (ElemType *)malloc(LIST_INIT_SIZE * sizeof(int));
+    return 0;
+}
+
+void PrintBin(int n)
+{
+    if (n / 2)
+    {
+        PrintBin(n/2);
+    }
+    cout<<n%2;
+}
 
 int main()
 {
-   
-    cout << sizeof(test) << endl;
+    int maxsize = 15;
+    PrintBin(11);
+    cout<<endl;
+    PrintBin(10);
+    cout<<endl;
+    int c = 11 & 10;
+    printf("%d", c);
 }
