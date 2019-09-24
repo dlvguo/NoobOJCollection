@@ -1,41 +1,36 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include<iostream>
+#include <iostream>
 using namespace std;
-#define LIST_INIT_SIZE 100
-#define LISTINCREMENT 10
 
-typedef int ElemType;
-
-typedef struct
+class A
 {
-    ElemType *elem;
-    int length;
-    int listsize;
-} SqList;
+private:
+    int a;
 
-int init(SqList &L)
-{
-    L.elem = (ElemType *)malloc(LIST_INIT_SIZE * sizeof(int));
-    return 0;
-}
-
-void PrintBin(int n)
-{
-    if (n / 2)
+public:
+    A()
     {
-        PrintBin(n/2);
+        a = 10;
     }
-    cout<<n%2;
-}
+    A(int a)
+    {
+        this->a = a;
+    }
+    A &operator+(int b)
+    {
+        this->a += b;
+        return (*this);
+    }
+    void print(){
+        cout<<a<<endl;
+    }
+};
 
 int main()
 {
     int maxsize = 15;
-    PrintBin(11);
-    cout<<endl;
-    PrintBin(10);
-    cout<<endl;
-    int c = 11 & 10;
-    printf("%d", c);
+    A b(11);
+    (b+10).print();
+    b.print();
 }
