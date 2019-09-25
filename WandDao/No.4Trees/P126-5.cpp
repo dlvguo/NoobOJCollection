@@ -23,12 +23,22 @@ void FigureHighByLink(BiTree bt)
             btqueue.push(btnode->rchild);
             levelcount++;
         }
-        //说明当前层次遍历完
-        if(left==right){
+        //说明当前层次遍历完 防止最后一层多搞一次
+        if(left==right&&!btqueue.empty()){
             left=1;
             right=levelcount;
             levelcount=0;
             hight++;
         }
     }
+}
+
+//底层计算
+int DfsFigure(BiTree bt){
+    if(bt==NULL)
+        return 0;
+    int lheigh=DfsFigure(bt->lchild);
+    int rheigh=DfsFigure(bt->rchild);
+    //哪边分支大就用哪变的高度
+    return lheigh>rheigh?lheigh+1:rheigh+1;
 }

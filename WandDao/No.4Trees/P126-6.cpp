@@ -3,8 +3,6 @@
 #include <stack>
 using namespace std;
 
-//right to left down to up
-//切割数组初试1-N
 void CreateBin(int preorder[], int prestart, int prelen, int inorder[], int instart, int inlen, BiTree &bit)
 {
     if (prestart > prelen)
