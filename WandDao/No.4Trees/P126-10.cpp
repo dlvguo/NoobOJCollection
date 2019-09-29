@@ -4,16 +4,18 @@
 using namespace std;
 
 #define K 100
-//初始为1
-int data=0;
-void FindKNum(BiTree bt,int n)
+//或者定义全局变量
+int FindKNum(BiTree bt, int &n = 1)
 {
-    if(n==K){
-        data=bt->data;
-        return ;
+    if (n == K)
+    {
+        return bt->data;
     }
-    if(n>K)
-        return;
-    FindKNum(bt->lchild,n+1);
-    FindKNum(bt->rchild,n+1);
+    if (n > K)
+        return -1;
+    int left = FindKNum(bt->lchild, n + 1);
+    if (left != -1)
+        return left;
+    else
+        return FindKNum(bt->rchild, n + 1);
 }

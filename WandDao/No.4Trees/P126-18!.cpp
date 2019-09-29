@@ -4,37 +4,29 @@ using namespace std;
 
 //查找中序线索 判断是否叶节点 True 即lchild的lchild false
 ThreadTree btnode;
-void Searchnode(ThreadTree bt, ThreadTree point)
+//如果节点有左孩子就是左 右孩子就是右若无看前继 ,看前继左孩子是，没有就继续找 若碰到为空说明没有 叶子点或者根节点
+ThreadTree Searchnode(ThreadTree bt, ThreadTree point)
 {
     if (!bt)
         return NULL;
-    //相等不论是否为空
-    if (bt == point)
+    //左子树
+    if (bt->lchild && !bt->ltag)
     {
-        //左子树
-        if (bt->rchild != NULL&&!bt->rtag)
-        {
-            btnode = *bt->rchild;
-        }
-        //右子树
-        else if (bt->lchild != NULL&&!bt->ltag)
-        {
-            btnode = *bt->lchild;
-        }
-        else //如果是叶子节点 即为父节点的左子树节点就为前继 且
-        {
-            bt=bt->lchild;
-            if(bt->ltag)
-            btnode=*bt->lchild;
-            else{
-                btnode=NULL;
-            }
-        }
-        return;
+        return bt->lchild;
+    }
+    //右子树
+    else if (bt->rchild && !bt->rtag)
+    {
+        return bt->rchild;
     }
     else
     {
-        Searchnode(bt->lchild, point);
-        Searchnode(bt->rchild, point);
+        while (bt && bt->ltag == 1)
+        {
+            bt = bt->lchild;
+        }
+        if (bt->lchild != NULL)
+            return bt->lchild;
+        return NULL;
     }
 }

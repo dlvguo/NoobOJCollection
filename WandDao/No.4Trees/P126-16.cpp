@@ -2,8 +2,9 @@
 #include "../../Headers/BinaryTree.h"
 using namespace std;
 
-//层次遍历计算宽度
-void CreateLink(BiTree bt, BiTree &head, BiTree &pre = NULL)
+//设置一个头指针
+BiTree head, pre = NULL;
+void CreateLink(BiTree bt)
 {
     if (bt->lchild == NULL && bt->rchild == NULL)
     {

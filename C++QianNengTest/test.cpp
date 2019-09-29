@@ -27,10 +27,11 @@ public:
     }
 };
 
+void test(int i,int k=0,int c=1){
+    cout<<i<<k<<c<<endl;
+}
 int main()
 {
     int maxsize = 15;
-    A b(11);
-    (b+10).print();
-    b.print();
+    test(maxsize++,++maxsize,++maxsize);
 }

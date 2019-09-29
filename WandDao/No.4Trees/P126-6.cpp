@@ -3,22 +3,25 @@
 #include <stack>
 using namespace std;
 
-void CreateBin(int preorder[], int prestart, int prelen, int inorder[], int instart, int inlen, BiTree &bit)
+BiTree CreateBin(int preorder[], int prestart, int prelen, int inorder[], int instart, int inlen)
 {
     if (prestart > prelen)
-        return;
+        return NULL;
+    BiTree r = new BiTNode;
     int root = preorder[prestart];
     for (int i = instart; i <= inlen; i++)
     {
         if (root == inorder[i])
         {
-            bit = new BiTNode;
-            bit->data = root;
+            int llen = i - instart;
+            int rlen = inlen - i;
+            r->data = root;
             //切割左右子树 分别进入
             //Left
-            CreateBin(preorder, prestart + 1, prestart + i - instart, inorder, instart, i - 1, bit->lchild);
+            r->lchild = CreateBin(preorder, prestart + 1, prelen+llen, inorder, instart, i - 1);
             //Right
-            CreateBin(preorder, prestart +i-instart+1; prelen, inorder, i+1, inlen, bit->rchild);
+            r->rchild = CreateBin(preorder, prelen-rlen+1; prelen, inorder, i + 1, inlen);
         }
     }
+    return r;
 }

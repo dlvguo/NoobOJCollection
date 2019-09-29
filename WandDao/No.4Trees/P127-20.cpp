@@ -10,10 +10,11 @@ typedef struct node
 void PrintInExpression(BTree bt)
 {
     //中序遍历 操作符出一个() 输出顺序要包含下面的操作数
+    //根节点 或者叶节点不需要根号
     if (!bt)
         return;
     //如果为操作符
-    if (!strcmp(bt->data, "+") || !strcmp(bt->data, "-") || !strcmp(bt->data, "*") || !strcmp(bt->data, "/"))
+    if (bt->lchild||bt->rchild)
     {
         cout << '(';
         PrintInExpression(bt->lchild);
