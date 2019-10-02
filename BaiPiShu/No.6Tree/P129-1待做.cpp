@@ -2,8 +2,7 @@
 #include "../../Headers/BinaryTree.h"
 using namespace std;
 
-//创建哈夫曼树
-//
+//创建哈夫曼树 国哥法
 BiTree CreateHafuman(BiTree w[], int len)
 {
     //用于记录某个权值的数是否使用
@@ -66,6 +65,10 @@ BiTree CreateHafuman(BiTree w[], int len)
     }
     return head;
 }
+
+
+//白皮书法
+typedef struct 
 
 int main()
 {
