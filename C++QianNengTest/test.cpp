@@ -3,35 +3,16 @@
 #include <iostream>
 using namespace std;
 
-class A
+int ** test(int **p)
 {
-private:
-    int a;
-
-public:
-    A()
-    {
-        a = 10;
-    }
-    A(int a)
-    {
-        this->a = a;
-    }
-    A &operator+(int b)
-    {
-        this->a += b;
-        return (*this);
-    }
-    void print(){
-        cout<<a<<endl;
-    }
-};
-
-void test(int i,int k=0,int c=1){
-    cout<<i<<k<<c<<endl;
+    **p = 15;
+    return p;
 }
+
 int main()
 {
-    int maxsize = 15;
-    test(maxsize++,++maxsize,++maxsize);
+    int p = 10;
+    int *q = &p;
+    int **tt = test(&q);
+    cout<<**tt;
 }
