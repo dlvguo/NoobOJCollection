@@ -11,8 +11,6 @@ int ** test(int **p)
 
 int main()
 {
-    int p = 10;
-    int *q = &p;
-    int **tt = test(&q);
-    cout<<**tt;
+    
+    cout<<p;
 }

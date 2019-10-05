@@ -68,7 +68,10 @@ BiTree CreateHafuman(BiTree w[], int len)
 
 
 //白皮书法
-typedef struct 
+typedef struct hfmannode{
+    int weight;
+    int parent;
+}HfmTree;
 
 int main()
 {
