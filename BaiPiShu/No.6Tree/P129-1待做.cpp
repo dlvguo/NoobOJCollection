@@ -33,7 +33,7 @@ BiTree CreateHafuman(BiTree w[], int len)
     int count = 0;
     BiTree head;
     //代表原数组下标
-    while (count ！= len-1)
+    while (count ！ = len - 1)
     {
         //始终把最小的俩权值放在1、2个位置
         BiTree bt = w[0];
@@ -66,13 +66,58 @@ BiTree CreateHafuman(BiTree w[], int len)
     return head;
 }
 
+#define N 100
 
-//白皮书法
-typedef struct hfmannode{
+//使用数组表示法
+typedef struct hfmannode
+{
     int weight;
     int parent;
-}HfmTree;
+    int lchild, right;
+} HfmTree[2 * N]; //1-2N-1下标表示哈夫曼总数
 
-int main()
+HfmTree Create(int w[])
 {
+    HfmTree hf;
+    for (int i = 1; i < 2*N; i++)
+    {
+        //初始化
+        hf[i].parent=-1;
+        if(i<=n){
+            hf[i].weight[w[i]];
+        }
+    }
+    int nodenums=n;
+    //若 nodenums==2*N表示树已生成
+    while (nodenums<2*N)
+    {
+        //取出最小的俩个节点生成新的节点 
+        int min,secondmin,minindex,secondindex;
+        minindex=secondindex=-1;
+        min=secondmin=-1;
+        for (int i = 1; i <= nodenums; i++)
+        {
+            //表示已经存在
+            if(hf[i].parent!=-1)
+                continue;
+            //寻找第一个点
+            if(minindex==-1){
+                min=hf[i].weight;
+                minindex=i;
+            }
+            else if(min>=hf[i].weight) {
+                secondmin=min;
+                secondindex=minindex;
+                min=hf[i].weight;
+                minindex=i;
+            }
+        }
+        nodenums++;
+        hf[minindex].parent=hf[secondindex]=nodenums;
+        hf[nodenums].weight= hf[minindex].weight+hf[secondindex].weight;
+        hf[nodenums].lchild=minindex;
+        hf[nodenums].right=secondindex;
+    }
+    //此时最后一个节点为根节点
+    return hf;
 }
