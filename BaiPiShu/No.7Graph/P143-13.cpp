@@ -17,8 +17,8 @@ void D_visit(ALGraph m){
     {
         int v=vstack.top();
         vstack.pop();
+        //代表
         ArcNode arcnode=m.vertices[v].first;
-        
         while (arcnode)
         {
             if(visit[arcnode->adjvex])

@@ -106,7 +106,6 @@ void bfs(int x, int y)
                 
                 if (y1 == p.y)
                 {
-                    y1 = y1 + 1;
                     if (!BorderJudge(x1, y1 - 1) && !visit[x1][y1 + 1])
                     {
                         pos newp;

@@ -36,16 +36,16 @@ void Coloring(Graph G)
     q.push(0);
     int colors=1;
     visit[0]=true;
-    G.v[0]=0;
+    G.v[0].c=(color)0;
     while (!q.empty())
     {
         int v=q.front();
         q.pop();
         for (int i = 0; i < G.nationnum; i++)
         {
-            if(G.edges[v][q]&&visit[i]){
+            if(G.edges[v][i]&&visit[i]){
                 visit[i]=true;
-                G.v[i].c=colors;
+                G.v[i].c=(color)colors;
                 q.push(i);
             }
         }
@@ -56,4 +56,5 @@ void Coloring(Graph G)
 
 int main()
 {
+    
 }
