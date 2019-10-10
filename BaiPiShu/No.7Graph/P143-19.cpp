@@ -36,7 +36,7 @@ void dfs(ALGraph g, int v)
         {
             deleteadj(g);
         }
-        //???????
+        //
         else
         {
             dfs(g, w);

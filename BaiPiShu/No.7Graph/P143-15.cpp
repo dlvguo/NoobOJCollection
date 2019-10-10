@@ -2,37 +2,50 @@
 #include "../../Headers/graph.h"
 using namespace std;
 
-//设图下标1-Max
-bool visit[MaxVertex + 1];
-int maxheight;
-//dfs遍历图求最长深度 h初始为1  若节点之间有+1
-void dfs(ALGraph g, int v, int high)
+typedef int Queue;
+
+//因为要求最短时间复杂度 就根据判断即可
+//接口判断度
+int Du(int w)
 {
-    for (int w = FirstNeighbor(g, v); w > 0; w = NextNeighbor(g, v, w))
-    {
-        if (visit[w])
-            continue;
-        //如果有路径对比距离
-        visit[w]=true;
-        maxheight=maxheight<high?high:maxheight;
-        dfs(g, w,high+1);
-        visit[w]=false;
-    }
+    return 0;
 }
 
-int SearchMax(ALGraph g)
+int Dequeue(int q);
+
+void Enqueue(int q, int w);
+
+//进行N轮 每次找到所有的叶节点 直到叶节点<2时候 查询的轮次*2就是最大直径 若m==1 return 2*r m==0 2*r-1
+int SearchMax(int n)
 {
-    //存储最大的高度
-    maxheight = 0;
-    for (int i = 1; i <= MaxVertex; i + +)
+    Queue q;
+    int m = 0;
+    int r = 0; //循环轮次
+    for (int i = 0; i < n; i++)
     {
-        visit[i] = false;
+        if (Du(i) == 1)
+        {
+            Enqueue(q, i);
+            //叶子树++
+            m++;
+        }
     }
-    for (int i = 1; i <= MaxVertex; i + +)
+
+    while (m >= 2)
     {
-        visit[i]=true;
-        dfs(g, i, 1);
-        visit[i]=false;
+        int j = 0; //新一轮叶子数目
+        //遍历每个叶节点
+        for (int i = 0; i < m; i++)
+        {
+            int w = Dequeue(q); //表示出队后，与节点v相邻的m节点的度数-1  并返回w节点
+            if (Du(w) == 1)
+            {
+                Enqueue(q, w);
+                j++;
+            }
+        }
+        m = j;
+        r++;
     }
-    return maxheight;
+    return m == 1 ? 2 * r : 2 * r - 1;
 }

@@ -26,7 +26,7 @@ typedef struct arcnode{
 
 typedef struct VNode{
     vertextype data;
-    ArcNode *first;
+    ArcNode first;
 }AdjList[MaxVertex];
 
 typedef struct  algraph
