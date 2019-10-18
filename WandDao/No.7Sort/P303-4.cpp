@@ -28,6 +28,7 @@ void RandomPartition(int a[], int low,int high)
         a[high]=a[low];
     }
     a[low]=pivot;
+    return low;
 }
 
 void QuickSort(int a[],int low,int high){
