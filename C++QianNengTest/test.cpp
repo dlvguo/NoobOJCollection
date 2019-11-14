@@ -3,14 +3,26 @@
 #include <iostream>
 using namespace std;
 
-int ** test(int **p)
+class A
 {
-    **p = 15;
-    return p;
-}
+public:
+    A()
+    {
+        x = 100;
+    }
+
+    A(const A &X){
+        cout<<"FUCK"<<endl;
+    }
+    int x;
+    ~A(){
+        cout<<"I am end"<<endl;
+    }
+};
 
 int main()
 {
-    
-    cout<<p;
+    int a=5;
+    a*=a/=2;
+    cout<<a;
 }

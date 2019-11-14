@@ -17,7 +17,7 @@ int Partition(int a[], int low, int high)
     return low;
 }
 
-//快速排序
+//????
 void QucikSort(int a[], int low, int high)
 {
     if(low<high){
