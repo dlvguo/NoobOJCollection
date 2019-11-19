@@ -22,7 +22,6 @@ public:
 
 int main()
 {
-    int a=5;
-    a*=a/=2;
-    cout<<a;
+    int x=1;
+    cout<<(x=2);
 }
