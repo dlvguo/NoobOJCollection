@@ -5,37 +5,42 @@ using namespace std;
 
 class A
 {
-private:
-    int a;
-    int c = 55;
 
 public:
-    A(int a, int c = 789)
+    A() {
+        cout<<"A";
+    }
+    virtual ~A()
     {
-        this->a = a;
-        this->c = c;
-        cout << "A:" << a << endl;
+        cout <<"~A";
     }
-
-    A(const A &a)
-    {
-        this->a = a.a;
-        cout << "FUCKa" << endl;
-    }
-    void print()
-    {
-        cout << "B:" << a << endl;
-        cout << "C:" << c << endl;
-    }
-    ~A(){
-        cout<<"FUCk";
-    }
-    
 };
+class B:public A
+{
+private:
+    /* data */
+public:
+    B(){
+        cout<<"B";
+    }
+    virtual ~B(){
+        cout<<" ~B";
+    }
+};
+
+class C:public A,public B{
+    public :
+    C(){
+        cout<<"C";    
+    }
+    virtual ~C(){
+        cout<<"~C";
+    }
+};
+
 
 int main()
 {
-    //A a(6, 1), c = a, b(666,999);
-    A b = A(6,1);
-    b.print();
+    C c;
+    cout<<endl;
 }
