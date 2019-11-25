@@ -51,6 +51,5 @@ void TraceBack(int size[][],int c[],int n){
         if(Nets[i])
             cout<<i<<c[i]<<" ";
     }
-    cout<<endl<<"最大不相交集为："<<size[n][n];
-          
+    cout<<endl<<"最大不相交集为："<<size[n][n];         
 }
