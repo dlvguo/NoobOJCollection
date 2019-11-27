@@ -51,3 +51,8 @@ LinkList Merge(LinkList list[], int k)
     //List[1]存放合并好的
     return list[1];
 }
+
+//我这个也行 还有一种就是建立按那个建立小根堆 每次取俩个最小的 或者用优先队列调整
+
+
+//或者用归并法
