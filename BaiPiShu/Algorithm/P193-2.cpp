@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
 
+//错了应该类似八皇后全部遍历
 void PrintAll(int a[], int n)
 {
     for (int i = 1; i <= n; i++)

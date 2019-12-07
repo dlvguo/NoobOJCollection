@@ -34,11 +34,11 @@ Bitree FindAncesor(Bitree bt, Bitree p, Bitree q)
             }
             //说明找到了俩个元素
             else{
-                for (int i = top1; i >=0; i--)
+                //找到后从前面开始找 直到找到不同点 则前面一个就是公共祖先 比王道好！！
+                for (int i = 1;i<=top1&&i<=top; i++)
                 {
-                    for(int j=top;j>=0;j--)
-                        if(s1[i]==stack[j])
-                            return s1[i];
+                    if(stack[i]!=s1[i])
+                        return i-1;
                 }
             }
         }
@@ -61,3 +61,6 @@ Bitree FindAncesor(Bitree bt, Bitree p, Bitree q)
     //可能没找到
     return NULL;
 }
+
+//还有一种判断子树法 如果在如果有一个节点等于当前根说明就是公共节点 或者俩个节点分别在左右子树 说明是公共节点
+//否则在单一子树就去那边找

@@ -26,8 +26,8 @@ void Bag01(int c[], int n, int total)
             else
             {
                 //若是完全背包可在这加一层 for 1<=k<=j/w[i]
-                //或者动态转移方程改成w[i-1][j],w[][i][j-c[i]]+c[i] 因为本身可以再次放入
-                w[i][j]=max(w[i-1][j],w[i-1][j-c[i]]+c[i]);
+                //或者动态转移方程改成w[i-1][j],w[i][j-c[i]]+c[i] 因为本身可以再次放入
+                w[i][j]=max(w[i-1][j],w[i][j-c[i]]+c[i]);
             }
         }
     }
