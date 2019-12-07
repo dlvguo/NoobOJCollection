@@ -27,7 +27,7 @@ int main(){
 
 //还有一种状态压缩 感觉是重点看的蒙 后续总结
 //状态压缩dp[i][s]表示当前i到s所访问的最短路径 目标是1到s s表示所有点 s用二进制表示集合
-//dp[j][S|1<<i]=minvalue(dp[i][S]+G[i][j]) j表示到集合 S|j即放入j点
+//dp[j][S|1<<j]=minvalue(dp[i][S]+G[i][j]) j表示到集合 S|j即放入j点
 //dp[i][S]=minvalue{dp(i,S^(1<<i))+G[i][j]}//表示i在j中  //注意二进制数已经下标问题 去掉下标异或就好了
 //初始化 dp[i][1<<i]=0
 
@@ -45,7 +45,7 @@ int Min(Graph g){
                 for (int j = 0; j <g.vertexnum; i++)
                 {
                     if((!(1<<j)&s)&&g.edges[i][j]!=Inf){//这个是从i-j j不在集合
-                        dp[j][s|1<<i]=min(dp[j][s],dp[i][s]+G[i][j]);
+                        dp[j][s|1<<j]=min(dp[j][s|1<<j],dp[i][s]+G[i][j]);
                     }
                 }
             }
@@ -55,7 +55,7 @@ int Min(Graph g){
             if(1<<j&s){
                 for(int i=0;i<g.vertexnum;i++){
                     if(1<<i&s&&g.edges[i][j]!=Inf){
-                        dp[j][s]=min(dp[j][s],dp[i][j^(1<<i)]+g.edges[i][j])
+                        dp[j][s]=min(dp[j][s],dp[i][s^(1<<j)]+g.edges[i][j])
                     }
                 }
             }
