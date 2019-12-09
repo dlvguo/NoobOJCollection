@@ -33,7 +33,6 @@ bool dfs(int map[][],int x,int y){
         visit[x2][y2]=1;
         visit[x3][y3]=1;
         if(dfs(map,))
-
     }
     
 }

@@ -2,28 +2,36 @@
 #include <stdlib.h>
 #include <iostream>
 using namespace std;
-class Material{
-    public:
-    int m=10;
-    Material(int b){
-        m=b;
-        cout<<m<<"I am Creating"<<endl;
+class Complex
+{
+private:
+    int x, y;
+
+public:
+    Complex(int x = 0, int y = 0)
+    {
+        this->x = x;
+        this->y = y;
     }
-    
-    ~Material(){
-        cout<<m<< "I am FUCK U"<<m<<endl;
+    friend Complex &operator++(Complex &c)
+    {
+        c.x++;
+        c.y++;
+        return c;
+    }
+    Complex operator++(int)
+    {
+        Complex temp = *this;
+        ++(*this);
+        return temp;
+    }
+    void Print(){
+        cout<<x<<y;
     }
 };
-
-Material  K(){
-    Material a(777);
-    Material m(555);
-    return m;
-}
 int main()
 {
-    Material(5);//产生一个匿名对象并有一个析构
-    Material a(11);
-    a=K();//初始后再接是有3个
-    Material b(666666);
+    Complex c(10,20);
+    ++++++c;
+    c.Print();
 }

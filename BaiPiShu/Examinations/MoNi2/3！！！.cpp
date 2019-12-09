@@ -10,6 +10,7 @@ int N;
 void Dfs(int v,int **map,int nowvalue,int sum=1){//v表示当前访问的节点 sum表示访问总数当总数==n说明全访问 做全排列
     if(sum==N){
         minvalue=nowvalue>minvalue?minvalue:nowvalue;
+        return;
     }
     for (int i = 1; i <=N; i++)
     {
