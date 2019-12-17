@@ -2,7 +2,27 @@
 #include <cstring>
 using namespace std;
 
-int main()
+class B
 {
-   int a[][3]={1,2,3,4,5,0}
+public:
+   B(){}
+   virtual void show()
+   {
+      cout << "B" << endl;
+   }
+
+   B(const B &b)
+   {
+      cout << "I am Fuck ";
+   }
+};
+
+void func3(B *b)
+{
+   b->show();
+}
+
+int main()
+{int a=5;	
+   cout<<(a=10);
 }

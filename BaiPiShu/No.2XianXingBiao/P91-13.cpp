@@ -23,7 +23,6 @@ LinkList AscLink(LinkList A, LinkList B)
     while (A && B)
     {
         if (A->data > B->data)
-        if (A->data > B->data)
         {
             pr->next = B;
             B = B->next;
@@ -61,3 +60,4 @@ int main()
     PrintList(C, false);
     return 0;
 }
+

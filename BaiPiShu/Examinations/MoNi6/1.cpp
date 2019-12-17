@@ -1,24 +1,20 @@
 #include<iostream>
 #include<math.h>
 using namespace std;
-//如果输出全排列的话 可用2进制表示状态位 则需要n个二进制表表示这n个状态位 遍历即可
-void PrintAll(int n){
-    long long b=pow(2,n);
-    for (int i = 1; i <b; i++)
-    {
-        //第i个位置为1 表示i属于这个集合
-        int temp=i,index=1;
-        while (temp)
-        {
-            if(temp%2)
-                cout<<index;
-            index++;
-            temp=temp>>1;
-        }
-        cout<<endl;
+//情况采用回溯 f(n,n)表示拆分n个集合于是有
+int f(int n,int m){
+    if(m==1||n==m){
+        return 1;
     }
+    return f(n-1,m-1)+f(n-1,m)*m;
 }
 
 int main(){
-    PrintAll(3);
+    int n,ans=0;
+    cin>>n;
+    for (int i = 1; i <=n; i++)
+    {
+        ans+=f(n,i);
+    }
+    cout<<ans<<endl;
 }
