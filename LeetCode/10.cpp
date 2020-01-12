@@ -4,60 +4,48 @@ using namespace std;
 
 bool isMatch(char *s, char *p)
 {
-    int slen = strlen(s), plen = strlen(p), sindex = 0, pindex = 0;
-    int musIndex=0;
-    while (sindex < slen && pindex < plen)
-    {
-        if (p[pindex] == '.')
-        {
-            if (pindex + 1 != plen)
-            {
-                if (p[pindex + 1] == '*')
-                {
-                    pindex+=2;
-
-                    return true;
-                }
-            }
-            pindex++;
-            sindex++;
-        }
-        else
-        {
-            if (pindex + 1 != plen)
-            {
-                if (p[pindex + 1] == '*')
-                {
-                    while (sindex < slen && s[sindex] == p[pindex])
-                    {
-                        sindex++;
-                    }
-                    pindex += 2;
-                    //再来一波那种判断 如果后面的数字相等就回消
-                    //计算后面有几个相同的
-                    int temp = pindex - 2, tempindex = sindex - 1;
-                    while (pindex < plen && p[pindex] == p[temp])
-                    {
-                        if (p[pindex] != s[tempindex--])
-                            return false;
-                        pindex++;                        
-                    }
-                    continue;
-                }
-            }
-            if (s[sindex] != p[pindex])
-                return false;
-            pindex++;
-            sindex++;
-        }
+    int slen = strlen(s), plen = strlen(p);
+    if(plen==0)
+        return slen==0?true:false;
+    if (slen==0){
+        if(plen==1||p[1]!='*')
+            return false;
+         return isMatch(s,p+2);
     }
-    if (sindex >= slen && pindex >= plen)
-        return true;
+    if (p[0] == '.')
+    {
+        if (plen == 1 || p[1] != '*')
+            return isMatch(s + 1, p + 1);
+        if(plen==2)
+            return true;
+        for (int i = slen; i>=0; i++)
+        {
+            if(isMatch( s+i,p+2))
+                return true;
+        }
+        return false;
+    }
+    //俩种情况 一种是匹配的一种是*的
+    if(plen>=2&&p[1]=='*'){
+        int count=0,tempp=plen+2,sindex=0;    
+        while (tempp<plen&&sindex<slen&&s[sindex]==p[tempp])
+        {
+            count++;
+        }
+        for (int i = count; i>=0; i++)
+        {
+            if(isMatch( s+i,p+2))
+                return true;
+        }
+        return false;
+    }
+    else if(s[0]==p[0])
+        return isMatch(s+1,p+1);
     return false;
 }
 
 int main()
 {
-    char *s = "aaa", *p = "ab*c*a*a";
+    char *s ="mississippi", *p ="mis*is*p*.";
     cout << isMatch(s, p);
 }
