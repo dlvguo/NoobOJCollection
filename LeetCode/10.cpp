@@ -2,23 +2,30 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-bool FirstMatch(char a,char b){
-    return a==b||b=='.';
-}
 
-bool isMatch(char *s, char *p)
+//双指针法
+int maxArea(int *height, int heightSize)
 {
-    //匹配式为0的话
-    if(*p==0)
-        return *s==0;
-    if(*(p+1)=='*'){
-        return isMatch(s,p+2)||(*s&&FirstMatch(*s,*p)&&isMatch(s+1,p));
+    int max = 0;
+    int low = 0, high = heightSize - 1;
+    while (low < high)
+    {
+        int h = height[low] > height[high] ? height[high] : height[low];
+        int temp = (high - low) * h;
+        if (temp > max)
+            max = temp;
+        if (height[low] > height[high])
+        {
+            high--;
+        }
+        else
+        {
+            low++;
+        }
     }
-    return *s&&FirstMatch(*s,*p)&&isMatch(s+1,p+1);
+    return max;
 }
 
 int main()
 {
-    char *s ="mississippi", *p ="mis*is*p*.";//空就为0
-    cout<<isMatch(s,p);
 }
