@@ -40,7 +40,7 @@ int Figure(int length){
     dp[3]=3;
     for (int i = 4; i <=length; i++)
     {
-        for (int j = 1; j <=i/2; j++)
+        for (int j = 1; j <=i/2; j++)//割到一半即可
         {
             int max=dp[j]*dp[i-j];
             if(max>dp[i])

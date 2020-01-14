@@ -17,4 +17,5 @@ int main(){
     int a[][4]{1,2,3,4,3,4,5,6,5,6,7,8};
     //process(a,3,4);
     freopen("C:/NoobOJCollection/BaiPiShu/C++/P74-21.txt","r",stdin);     
+
 }
