@@ -26,6 +26,11 @@ int maxArea(int *height, int heightSize)
     return max;
 }
 
+int Fuck(){
+    return 5;
+}
+
 int main()
 {
+    cout<<Fuck();
 }
