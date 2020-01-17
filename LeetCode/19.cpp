@@ -29,7 +29,6 @@ struct ListNode *removeNthFromEnd(struct ListNode *head, int n)
     }
     else
         head = head->next;
-    free(last);
     return head;
 }
 
