@@ -75,9 +75,12 @@ public:
     DisplayType GetGrid(int x, int y);
 };
 
+//释放Map
 Map::~Map()
 {
-    delete grid;
+    for (int i = 0; i < this->x; ++i)
+        delete[] grid[i];
+    delete[] grid;
 };
 
 void Map::SetDefineMap()
