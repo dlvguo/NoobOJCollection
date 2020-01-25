@@ -1,6 +1,8 @@
 #include <iostream>
 #include <time.h>
 #include "enums.h"
+#include <queue>
+#include "distance.h"
 using namespace std;
 
 #ifndef _MAP_H_
@@ -23,9 +25,7 @@ private:
         this->roundNum = 0;
         this->zNum = 0;
         this->pNum = 0;
-        CreateEmptyMap();
-        G_PlaceMent();
-        Place_Block(15);
+        InitMap();
     }
 
 public:
@@ -41,6 +41,9 @@ public:
 
     //设定自定义范围
     void SetDefineMap();
+
+    //初始化地图包含放置东西
+    void InitMap();
 
     //创造空的地图
     void CreateEmptyMap();
@@ -58,21 +61,29 @@ public:
     Status Check(int x, int y);
 
     //DisPlay
-    void DisPlay();
+    void DisPlay(bool isClear = true);
     //更新地图
     void UpdateMap(int x, int y, DisplayType t);
     //获取地图行
     int GetX();
     //获取地图列
     int GetY();
-    //增加回合数
-    void AddRound(int num);
-    void AddZNum(int num);
-    void AddPnum(int num);
     //获取回合数
     int GetRound();
-
+    //增加回合数
+    void AddRound(int num);
+    //获取植物数量
+    int GetPNum();
+    //增加植物数量
+    void AddPnum(int num);
+    //获取僵尸数量
+    int GetZNum();
+    //增加僵尸数量
+    void AddZNum(int num);
+    //获取grid的type
     DisplayType GetGrid(int x, int y);
+    //使用BFS进行判断
+    bool JudgeBFS(); //判断是否
 };
 
 //释放Map
@@ -91,6 +102,19 @@ void Map::SetDefineMap()
     cin >> y;
     CreateEmptyMap();
 };
+
+void Map::InitMap()
+{
+    bool tag = false;
+    while (!tag)
+    {
+        CreateEmptyMap();
+        G_PlaceMent();
+        Place_Block(15);
+        DisPlay(false);
+        tag = JudgeBFS();
+    }
+}
 
 void Map::CreateEmptyMap()
 {
@@ -143,9 +167,10 @@ Status Map::GetXY(int x, int y)
     return (Status)OK;
 }
 
-void Map::DisPlay()
+void Map::DisPlay(bool isClear)
 {
-    system("cls");
+    if (isClear)
+        system("cls");
 
     for (int i = 0; i < x; i++)
     {
@@ -189,6 +214,10 @@ void Map::DisPlay()
             else if (grid[i][j] == OVER)
             {
                 ch = 'O';
+            }
+            else if (grid[i][j] == RUNNER)
+            {
+                ch = 'R';
             }
             else
             {
@@ -267,6 +296,59 @@ DisplayType Map::GetGrid(int x, int y)
 int Map::GetRound()
 {
     return roundNum;
+}
+
+int Map::GetPNum()
+{
+    return pNum;
+}
+
+int Map::GetZNum()
+{
+    return zNum;
+}
+
+bool Map::JudgeBFS()
+{
+    //这一部分用来存放是否通过
+    int **visit;
+    visit = new int *[x];
+    for (int i = 0; i < x; i++)
+    {
+        visit[i] = new int[y];
+        for (int j = 0; j < y; j++)
+        {
+            visit[i][j] = 0; //初始化空格
+        }
+    }
+    visit[0][y - 1] = 1;
+
+    queue<Position> posqueue;
+    Position p(0, y - 1);
+    posqueue.push(p);
+    while (!posqueue.empty())
+    {
+        p = posqueue.front();
+        posqueue.pop();
+        for (int i = 0; i < 4; i++)
+        {
+            int x1 = p.pos_x + _DIRETION[i][0];
+            int y1 = p.pos_y + _DIRETION[i][1];
+            //避免越界
+            if (x1 < 0 || y1 < 0 || x1 >= x || y1 >= y || visit[x1][y1])
+                continue;
+            visit[x1][y1] = 1;
+            //说明能到达第一列
+            if (y1 == 0)
+                return true;
+            else if (grid[x1][y1] != BLOCK)
+            {
+                Position t(x1, y1);
+                posqueue.push(t);
+            }
+        }
+    }
+    return false;
 }
 
 #endif

@@ -6,7 +6,7 @@ enum Status
     ERROR = 0,
     OK = 1,
     HITGOAL = 2,
-    HITPLANT=3
+    HITPLANT = 3
 };
 
 enum DisplayType
@@ -21,4 +21,16 @@ enum DisplayType
     RUNNER = 7   //R RunNer
 };
 
+//八方向
+enum Diretion
+{
+    LEFT = 0,
+    RIGHT,
+    UP,
+    DOWN,
+    LEFTUP,
+    LEFTDOWN,
+    RIGHTUP,
+    RIGHUTDOWN
+};
 #endif

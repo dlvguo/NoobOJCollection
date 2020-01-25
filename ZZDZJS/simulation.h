@@ -1,7 +1,7 @@
 #include <iostream>
 #include <conio.h>
 #include "map.h"
-#include "character.h"
+#include "characters.h"
 using namespace std;
 
 #ifndef _SIMULATION_H_
@@ -52,6 +52,10 @@ void Simulation::StartSimulation()
         else if (c == 'q')
         {
             break;
+        }
+        else if (c == 'r')
+        {
+            Characters::GetInstance()->AddCharacter(RUNNER);
         }
         //判断是否OVER
         if (JudgeOver() == OK)
