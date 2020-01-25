@@ -61,22 +61,22 @@ bool Character::Living()
 
 #pragma endregion
 
-#pragma region ZOOBIE
+#pragma region ZOMBIE
 
-class Zoobil : public Character
+class Zombie : public Character
 {
 private:
     int leftRate, rightRate, upRate, downRate;
 
 public:
     //构造函数
-    Zoobil(DisplayType t, int x, int y, int l = 1, int r = 1, int u = 1, int d = 1);
+    Zombie(DisplayType t, int x, int y, int l = 1, int r = 1, int u = 1, int d = 1);
 
     //移动
     void Move();
 };
 
-void Zoobil::Move()
+void Zombie::Move()
 {
     Map *map = Map::GetInstance();
     int mapx = map->GetX();
@@ -87,7 +87,7 @@ void Zoobil::Move()
     {
         for (int i = 0; i < mapy; i++)
         {
-            if (map->Check(i, mapy - 1) == OK)
+            if (map->CheckZoomieMotion(i, mapy - 1) == OK)
             {
                 map->UpdateMap(i, mapy - 1, type);
                 pos_x = i;
@@ -122,7 +122,7 @@ void Zoobil::Move()
         {
             y1 -= 1;
         }
-        Status s = map->Check(x1, y1);
+        Status s = map->CheckZoomieMotion(x1, y1);
         if (s == ERROR)
             return;
         //如果新的位置能放置
@@ -139,7 +139,7 @@ void Zoobil::Move()
         {
             map->UpdateMap(x1, y1, type);
             //吃到植物++
-            map->AddPnum(1);
+            map->AddPNum(1);
         }
         map->UpdateMap(pos_x, pos_y, SPACE);
         pos_x = x1;
@@ -147,7 +147,7 @@ void Zoobil::Move()
     }
 }
 
-Zoobil::Zoobil(DisplayType t, int x, int y, int l, int r, int u, int d) : Character(t, x, y)
+Zombie::Zombie(DisplayType t, int x, int y, int l, int r, int u, int d) : Character(t, x, y)
 {
     this->leftRate = l;
     this->rightRate = r;
@@ -202,7 +202,7 @@ void Plant::Boom()
         int x1 = pos_x + _DIRETION[i][0];
         int y1 = pos_y + _DIRETION[i][1];
         DisplayType s = Map::GetInstance()->GetGrid(x1, y1);
-        if (s == ZOOBIE || s == ZOOBIE2 || s == RUNNER)
+        if (s == ZOMBIE || s == ZOMBIE2 || s == RUNNER)
         {
             //更新地图
             Map::GetInstance()->UpdateMap(x1, y1, SPACE);
@@ -330,13 +330,13 @@ private:
         //初始化放置3个
         while (pNum--)
         {
-            Zoobil *z = new Zoobil(ZOOBIE2, -1, -1, 2, 1, 1, 1);
+            Zombie *z = new Zombie(ZOMBIE2, -1, -1, 2, 1, 1, 1);
             charactersVector.push_back(z);
         }
 
         while (zNum--)
         {
-            Zoobil *z = new Zoobil(ZOOBIE, -1, -1, 2, 1, 1, 1);
+            Zombie *z = new Zombie(ZOMBIE, -1, -1, 2, 1, 1, 1);
             charactersVector.push_back(z);
         }
     }
@@ -371,24 +371,24 @@ void Characters::AddCharacter(DisplayType t)
 {
     int x1 = rand() % Map::GetInstance()->GetX();
     int y1;
-    if (t == ZOOBIE)
+    if (t == ZOMBIE)
     { //1号僵尸
         y1 = Map::GetInstance()->GetY() - 1;
         if (Map::GetInstance()->GetGrid(x1, y1) == SPACE)
         {
-            Zoobil *z = new Zoobil(t, x1, y1, 2, 1, 1, 1);
+            Zombie *z = new Zombie(t, x1, y1, 2, 1, 1, 1);
             Map::GetInstance()->UpdateMap(x1, y1, t);
             charactersVector.push_back(z);
             zoobileNum++;
         }
     }
-    else if (t == ZOOBIE2)
+    else if (t == ZOMBIE2)
     {
         y1 = Map::GetInstance()->GetY() - 1;
         if (Map::GetInstance()->GetGrid(x1, y1) == SPACE)
         {
             zoobileNum++;
-            Zoobil *z = new Zoobil(t, x1, y1, 4, 1, 1, 1);
+            Zombie *z = new Zombie(t, x1, y1, 4, 1, 1, 1);
             Map::GetInstance()->UpdateMap(x1, y1, t);
             charactersVector.push_back(z);
         }
@@ -440,7 +440,7 @@ void Characters::RemoveCharacters()
         //判断是否删除僵尸
         if (!(*iter)->Living())
         {
-            if ((*iter)->type == ZOOBIE || (*iter)->type == ZOOBIE2)
+            if ((*iter)->type == ZOMBIE || (*iter)->type == ZOMBIE2)
             {
                 zoobileNum--;
             }
@@ -466,12 +466,12 @@ void Characters::SRandCharacter()
     else if (p < pp + pz)
     {
         if (zoobileNum < limitZoobile)
-            AddCharacter(ZOOBIE);
+            AddCharacter(ZOMBIE);
     }
     else if (p < pp + pz + pz)
     {
         if (zoobileNum < limitZoobile)
-            AddCharacter(ZOOBIE2);
+            AddCharacter(ZOMBIE2);
     }
 }
 

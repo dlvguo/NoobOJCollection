@@ -4,11 +4,12 @@
 #include "characters.h"
 #include "enums.h"
 #include "fileio.h"
+#include <cstdio>
+
 using namespace std;
 
 int main()
 {
-    
     Simulation::GetInstance()->StartSimulation();
     //Map::GetInstance();
     //Characters::GetInstance()->AddCharacter(RUNNER);

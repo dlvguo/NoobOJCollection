@@ -59,11 +59,11 @@ void FileIO::SaveMap(Map *map)
             {
                 ch = 'G';
             }
-            else if (type == ZOOBIE)
+            else if (type == ZOMBIE)
             {
                 ch = 'Z';
             }
-            else if (type == ZOOBIE2)
+            else if (type == ZOMBIE2)
             {
                 ch = 'Y';
             }

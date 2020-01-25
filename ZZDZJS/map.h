@@ -12,8 +12,8 @@ class Map
 {
 private:
     int **grid; //地图绘制
-    int y;      //定义y轴行数
-    int x;      //定义x轴列数
+    int y;      //定义y轴列数
+    int x;      //定义x轴行数
     int roundNum;
     int zNum;
     int pNum;
@@ -30,11 +30,7 @@ private:
 
 public:
     //单例模式 方便交互
-    static Map *GetInstance()
-    {
-        static Map instance; //局部静态变量
-        return &instance;
-    }
+    static Map *GetInstance();
 
     //析构函数 释放内存  a
     ~Map();
@@ -57,8 +53,8 @@ public:
     //获取XY
     Status GetXY(int x, int y);
 
-    //判断是否能放置
-    Status Check(int x, int y);
+    //判断僵尸行为
+    Status CheckZoomieMotion(int x, int y);
 
     //DisPlay
     void DisPlay(bool isClear = true);
@@ -75,7 +71,7 @@ public:
     //获取植物数量
     int GetPNum();
     //增加植物数量
-    void AddPnum(int num);
+    void AddPNum(int num);
     //获取僵尸数量
     int GetZNum();
     //增加僵尸数量
@@ -83,7 +79,7 @@ public:
     //获取grid的type
     DisplayType GetGrid(int x, int y);
     //使用BFS进行判断
-    bool JudgeBFS(); //判断是否
+    bool JudgePass(); //判断是否
 };
 
 //释放Map
@@ -93,6 +89,12 @@ Map::~Map()
         delete[] grid[i];
     delete[] grid;
 };
+
+Map *Map::GetInstance()
+{
+    static Map instance; //局部静态变量
+    return &instance;
+}
 
 void Map::SetDefineMap()
 {
@@ -105,14 +107,16 @@ void Map::SetDefineMap()
 
 void Map::InitMap()
 {
-    bool tag = false;
-    while (!tag)
+    bool tag = false; //false代表地图不成功 true地图成功
+    while (true)
     {
         CreateEmptyMap();
         G_PlaceMent();
         Place_Block(15);
         DisPlay(false);
-        tag = JudgeBFS();
+        tag = JudgePass();
+        if (tag == true)
+            break;
     }
 }
 
@@ -120,7 +124,13 @@ void Map::CreateEmptyMap()
 {
     //避免越界
     x = x < 1 ? 1 : x;
+    if (x < 1)
+        x = 1;
     y = y < 4 ? 4 : y;
+    //可删上面
+    if (y < 4)
+        y = 4;
+
     //二级指针赋值法 等同grid[w][l]
     grid = new int *[x];
     for (int i = 0; i < x; i++)
@@ -163,8 +173,8 @@ void Map::Place_Block(int num)
 Status Map::GetXY(int x, int y)
 {
     if (x < 0 || x >= this->x || y < 2 || y >= this->y - 1)
-        return (Status)ERROR;
-    return (Status)OK;
+        return ERROR;
+    return OK;
 }
 
 void Map::DisPlay(bool isClear)
@@ -176,6 +186,7 @@ void Map::DisPlay(bool isClear)
     {
         for (int j = 0; j < y; j++)
         {
+            //在每一列第一行多输出一个 | - |
             if (j == 0)
                 cout << "-";
             cout << "----"; //首先先定义每个横纵坐标循环后，输出---作为横格 //
@@ -199,11 +210,11 @@ void Map::DisPlay(bool isClear)
             {
                 ch = 'G';
             }
-            else if (grid[i][j] == ZOOBIE)
+            else if (grid[i][j] == ZOMBIE)
             {
                 ch = 'Z';
             }
-            else if (grid[i][j] == ZOOBIE2)
+            else if (grid[i][j] == ZOMBIE2)
             {
                 ch = 'Y';
             }
@@ -219,7 +230,7 @@ void Map::DisPlay(bool isClear)
             {
                 ch = 'R';
             }
-            else
+            else //保留项
             {
                 ch = ' ';
             }
@@ -239,8 +250,9 @@ void Map::DisPlay(bool isClear)
          << "Round:" << roundNum << "\t\tZ:" << zNum << "\t\tP:" << pNum << endl;
 }
 
-Status Map::Check(int x, int y)
+Status Map::CheckZoomieMotion(int x, int y)
 {
+    //判断边界
     if (x < 0 || x >= this->x || y < 0 || y >= this->y)
         return ERROR;
     if (grid[x][y] == GOAL)
@@ -274,7 +286,7 @@ void Map::AddRound(int num)
     this->roundNum += num;
 }
 
-void Map::AddPnum(int num)
+void Map::AddPNum(int num)
 {
     this->pNum += num;
 }
@@ -286,6 +298,7 @@ void Map::AddZNum(int num)
 
 DisplayType Map::GetGrid(int x, int y)
 {
+    //防止超界
     if (x < 0 || x >= this->x)
         x = 0;
     if (y < 0 || y >= this->y)
@@ -308,7 +321,7 @@ int Map::GetZNum()
     return zNum;
 }
 
-bool Map::JudgeBFS()
+bool Map::JudgePass()
 {
     //这一部分用来存放是否通过
     int **visit;
