@@ -224,7 +224,7 @@ public:
     //检测到各个地方路径
     void FigureDistance();
 
-    //
+    //移动
     void Move();
 };
 
