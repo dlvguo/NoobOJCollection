@@ -12,8 +12,8 @@ class Simulation
 private:
     Simulation() {}
     Map *map;
-    Characters *characters;
-    int roundNum, pNum, zNum; //回合数 植物数 僵尸数
+    CharactersController *charactersCtrl;
+    int roundNum, pNum, zNum, success = 0, unsuccess = 0; //回合数 植物数 僵尸数 成功次数 失败次数
 
 public:
     //单例 SingleMode
@@ -27,6 +27,11 @@ public:
 
     //判断结束
     Status JudgeOver();
+    //初始化胜率
+    void InitSuccess();
+
+    //输出成功概率
+    void CoutSuccess();
 };
 
 Simulation *Simulation::GetInstance()
@@ -35,28 +40,39 @@ Simulation *Simulation::GetInstance()
     return &instance;
 }
 
+void Simulation::InitSuccess()
+{
+    success = 0;
+    unsuccess = 0;
+}
+
+void Simulation::CoutSuccess()
+{
+    cout<<"SuccessCount:"<<success<<" UnSuccessCout::"<<unsuccess<<endl;
+}
+
 void Simulation::StartSimulation()
 {
     srand(time(NULL));
     map = Map::GetInstance();
-    characters = Characters::GetInstance();
+    charactersCtrl = CharactersController::GetInstance();
     ActionOnce(); //TODO
     char c;
     while (true)
     {
-        c = getch();
-        if (c == ' ')
-        {
+        // c = getch();
+        // if (c == ' ')
+        // {
             ActionOnce();
-        }
-        else if (c == 'q')
-        {
-            break;
-        }
-        else if (c == 'r')
-        {
-            Characters::GetInstance()->AddCharacter(RUNNER);
-        }
+        // }
+        // else if (c == 'q')
+        // {
+        //     break;
+        // }
+        // else if (c == 'r')
+        // {
+        //     CharactersController::GetInstance()->AddCharacter(RUNNER);
+        // }
         //判断是否OVER
         if (JudgeOver() == OK)
         {
@@ -67,22 +83,26 @@ void Simulation::StartSimulation()
 
 void Simulation::ActionOnce()
 {
-    characters->Move();
+    charactersCtrl->Move();
     map->AddRound(1);
-    map->DisPlay();
+    //map->DisPlay();
     //if(map->GetRound()%10==0)
-    characters->SRandCharacter();
+    charactersCtrl->SRandCharacter();
 }
 
 Status Simulation::JudgeOver()
 {
     if (map->GetRound() >= 10000)
+    {
+        success++;
         return OK;
+    }
     for (int i = 0; i < map->GetX(); i++)
     {
         if (map->GetGrid(i, 0) != OVER)
             return ERROR;
     }
+    unsuccess++;
     return OK;
 }
 

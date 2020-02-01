@@ -16,7 +16,7 @@ enum DisplayType
     BLOCK = 0,   //#
     SPACE = 1,   //' '
     GOAL = 2,    //G
-    OVER = 3,    //O
+    OVER = 3,    //O 
     ZOMBIE = 4,  //Z僵尸1号
     ZOMBIE2 = 5, //Y僵尸2号
     PLANT = 6,   //P 植物

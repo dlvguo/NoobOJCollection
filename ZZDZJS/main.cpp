@@ -10,11 +10,26 @@ using namespace std;
 
 int main()
 {
-    Simulation::GetInstance()->StartSimulation();
+    while (true)
+    {
+        cout << "Please Cin pp k If PP==-1 Loop Over " << endl;
+        int count = 500;
+        int pp, k;
+        cin >> pp >> k;
+        Simulation::GetInstance()->InitSuccess();
+        CharactersController::GetInstance()->SetP(pp, 10, 5, k);
+        while (count--)
+        {
+            Simulation::GetInstance()->StartSimulation();
+        }
+        Simulation::GetInstance()->CoutSuccess();
+        system("pause");
+        system("cls");
+    }
+
     //Map::GetInstance();
     //Characters::GetInstance()->AddCharacter(RUNNER);
     //Characters::GetInstance()->Move();
     // FileIO::SaveMap(Map::GetInstance());
-    system("pause");
     return 0;
 }

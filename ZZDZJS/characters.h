@@ -14,7 +14,6 @@ using namespace std;
 #pragma region Character
 class Character
 {
-
 public:
     DisplayType type;
     int pos_x, pos_y;
@@ -79,13 +78,14 @@ public:
 void Zombie::Move()
 {
     Map *map = Map::GetInstance();
-    int mapx = map->GetX();
-    int mapy = map->GetY();
+    int mapx = map->GetX(); //地图的X
+    int mapy = map->GetY(); //地图的Y
 
     //说明未置放
     if (pos_x == -1 && pos_y == -1)
     {
-        for (int i = 0; i < mapy; i++)
+
+        for (int i = 0; i < mapx; i++)
         {
             if (map->CheckZoomieMotion(i, mapy - 1) == OK)
             {
@@ -101,26 +101,33 @@ void Zombie::Move()
         if (!Living())
             return;
         //假设只有 a和b
-        int total = leftRate + rightRate + upRate + downRate;
-        int pos = rand() % total;
-        int x1 = pos_x, y1 = pos_y;
+        //L 2 R 1 U 1 D 1
+        int total = leftRate + rightRate + upRate + downRate; //5
+        int pos = rand() % total;                             //%5 0-4 L 0 1 R 2 U 3 D 4
+        int x1 = pos_x, y1 = pos_y;                           //僵尸的坐标
         //说明左边移动
-        if (pos < leftRate)
+        if (pos < leftRate) //L=2 pos<2只有0 1
         {
-            x1 -= 1;
+            y1 -= 1; //-1
         }
+        // if(pos>=leftRate&&pos<leftRate+rightRate){
+
+        // }
         //右边移动
-        else if (pos < leftRate + rightRate)
-        {
-            x1 += 1;
-        }
-        else if (pos < leftRate + rightRate + upRate)
+        else if (pos < leftRate + rightRate) //R=2 3
         {
             y1 += 1;
         }
+        // if(pos>=leftRate=rightRate&&pos<leftRate+rightRate+upRate){
+
+        // }
+        else if (pos < leftRate + rightRate + upRate) //U=3 4
+        {
+            x1 -= 1;
+        }
         else
         {
-            y1 -= 1;
+            x1 += 1;
         }
         Status s = map->CheckZoomieMotion(x1, y1);
         if (s == ERROR)
@@ -318,19 +325,21 @@ void Runner::FigureDistance()
 #pragma region Characters
 
 //代表角色控制器
-class Characters
+class CharactersController
 {
 private:
+    //设置P的k
+    int pp = 2, pz = 10, py = 5, k = 4, limitZoobile = 10, zoobileNum = 0; //限制僵尸数量
+
     vector<Character *> charactersVector;
-    int pp = 2, pz = 10, py = 5, limitZoobile = 10, zoobileNum = 0; //限制僵尸数量
     //初始化的时候根据数量放置僵尸 并且未放置的时候x=-1 y=-1
-    Characters(int pNum = 3, int zNum = 3, int rNum = 0, int plantNum = 0)
+    CharactersController(int pNum = 3, int zNum = 3, int rNum = 0, int plantNum = 0)
     {
         zoobileNum = pNum + zNum;
         //初始化放置3个
         while (pNum--)
         {
-            Zombie *z = new Zombie(ZOMBIE2, -1, -1, 2, 1, 1, 1);
+            Zombie *z = new Zombie(ZOMBIE2, -1, -1, 4, 1, 1, 1);
             charactersVector.push_back(z);
         }
 
@@ -343,7 +352,7 @@ private:
     //俩种僵尸数量
 public:
     //单例模式 方便交互
-    static Characters *GetInstance();
+    static CharactersController *GetInstance();
 
     //添加角色
     void AddCharacter(DisplayType t);
@@ -357,22 +366,22 @@ public:
     //随机创建角色
     void SRandCharacter();
 
-    //设置概率
-    void SetP(int pp, int pz, int py);
+    //设置概率 pp植物概率 pz-xxx
+    void SetP(int pp, int pz, int py, int k);
 };
 
-Characters *Characters::GetInstance()
+CharactersController *CharactersController::GetInstance()
 {
-    static Characters instance; //局部静态变量
+    static CharactersController instance; //局部静态变量
     return &instance;
 }
 
-void Characters::AddCharacter(DisplayType t)
+void CharactersController::AddCharacter(DisplayType t)
 {
     int x1 = rand() % Map::GetInstance()->GetX();
     int y1;
     if (t == ZOMBIE)
-    { //1号僵尸
+    { //1号僵尸 Z
         y1 = Map::GetInstance()->GetY() - 1;
         if (Map::GetInstance()->GetGrid(x1, y1) == SPACE)
         {
@@ -383,7 +392,7 @@ void Characters::AddCharacter(DisplayType t)
         }
     }
     else if (t == ZOMBIE2)
-    {
+    { //2号僵尸 Y
         y1 = Map::GetInstance()->GetY() - 1;
         if (Map::GetInstance()->GetGrid(x1, y1) == SPACE)
         {
@@ -394,7 +403,7 @@ void Characters::AddCharacter(DisplayType t)
         }
     }
     else if (t == RUNNER)
-    {
+    { //R僵尸
         y1 = Map::GetInstance()->GetY() - 1;
         if (Map::GetInstance()->GetGrid(x1, y1) == SPACE)
         {
@@ -405,11 +414,11 @@ void Characters::AddCharacter(DisplayType t)
         }
     }
     else if (t == PLANT)
-    {
-        y1 = rand() % (Map::GetInstance()->GetY() / 2) + 1;
+    {                                                       //植物
+        y1 = rand() % (Map::GetInstance()->GetY() / 2) + 1; //1-6
         if (Map::GetInstance()->GetGrid(x1, y1) == SPACE)
         {
-            Plant *p = new Plant(t, x1, y1);
+            Plant *p = new Plant(t, x1, y1, k);
             Map::GetInstance()->UpdateMap(x1, y1, t);
             charactersVector.push_back(p);
         }
@@ -420,7 +429,7 @@ void Characters::AddCharacter(DisplayType t)
     }
 }
 
-void Characters::Move()
+void CharactersController::Move()
 {
     //TODO 计数位置
     for (int i = 0; i < charactersVector.size(); i++)
@@ -432,7 +441,7 @@ void Characters::Move()
     RemoveCharacters();
 }
 
-void Characters::RemoveCharacters()
+void CharactersController::RemoveCharacters()
 {
     auto iter = charactersVector.begin();
     while (iter != charactersVector.end())
@@ -454,7 +463,7 @@ void Characters::RemoveCharacters()
     }
 }
 
-void Characters::SRandCharacter()
+void CharactersController::SRandCharacter()
 {
     int p = rand() % 100;
     string str = "p:" + std::to_string(p);
@@ -475,11 +484,12 @@ void Characters::SRandCharacter()
     }
 }
 
-void Characters::SetP(int pp, int pz, int py)
+void CharactersController::SetP(int pp, int pz, int py, int k)
 {
     this->pp = pp;
     this->pz = pz;
     this->py = py;
+    this->k = k;
 }
 #pragma endregion
 

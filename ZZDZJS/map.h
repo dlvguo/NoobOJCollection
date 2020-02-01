@@ -62,6 +62,9 @@ public:
     void UpdateMap(int x, int y, DisplayType t);
     //获取地图行
     int GetX();
+    //检查格子放置的位置
+    void Place();
+
     //获取地图列
     int GetY();
     //获取回合数
@@ -113,7 +116,7 @@ void Map::InitMap()
         CreateEmptyMap();
         G_PlaceMent();
         Place_Block(15);
-        DisPlay(false);
+        //DisPlay(false);
         tag = JudgePass();
         if (tag == true)
             break;
@@ -168,6 +171,21 @@ void Map::Place_Block(int num)
             num--;
         }
     }
+}
+
+void Map::Place()
+{
+    int x1, y1;
+    while (1)
+    {
+        x1 = (rand() % x);
+        y1 = (rand() % y);
+        if (grid[x1][y1] == SPACE)
+        {
+            break;
+        }
+    }
+    //TODO 
 }
 
 Status Map::GetXY(int x, int y)
@@ -250,15 +268,19 @@ void Map::DisPlay(bool isClear)
          << "Round:" << roundNum << "\t\tZ:" << zNum << "\t\tP:" << pNum << endl;
 }
 
+
 Status Map::CheckZoomieMotion(int x, int y)
 {
     //判断边界
     if (x < 0 || x >= this->x || y < 0 || y >= this->y)
         return ERROR;
+    //如果grid[x][y]==GOAL
     if (grid[x][y] == GOAL)
         return HITGOAL;
+    //如果' '
     else if (grid[x][y] == SPACE)
         return OK;
+    //如果PLANT
     else if (grid[x][y] == PLANT)
         return HITPLANT;
     return ERROR;
