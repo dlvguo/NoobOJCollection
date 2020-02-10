@@ -4,27 +4,46 @@
 using namespace std;
 using namespace __gnu_cxx;
 
-#define POINT 4581298449
-
 struct Button
 {
     int status;
     int step = 0;
     int nums[5] = {0};
 };
+bool visit[10][5] = {0};
 
-void Set(unsigned long long &num, int n)
+//判断是否访问过
+bool Judge(vector<Button> bts)
 {
-    num = num | (1 << (n - 1));
+    for (int i = 0; i < bts.size(); i++)
+    {
+        if (!visit[i][bts[i].status])
+            return false;
+    }
+    return true;
+}
+
+void SetBtn(vector<Button> bts)
+{
+    for (int i = 0; i < bts.size(); i++)
+        visit[i][bts[i].status] = 1;
+}
+
+bool JudgeOver(vector<Button> bts)
+{
+    for (int i = 0; i < bts.size(); i++)
+    {
+        if (bts[i].status != 1)
+            return false;
+    }
+    return true;
 }
 
 int main()
 {
-    hash_set<int> visit;
     queue<vector<Button>> bqueue;
     vector<Button> bts;
     int temp;
-    unsigned long long setNum = 0;
     for (int i = 0; i < 9; i++)
     {
         Button b;
@@ -33,19 +52,20 @@ int main()
             cin >> temp;
             if (!j)
             {
-                //设置下位数
-                Set(setNum, i * 4 + temp);
+
                 b.status = temp;
             }
             else
             {
                 //赋值
                 b.nums[j] = temp;
+                visit[i][j] = 0;
             }
         }
         bts.push_back(b);
     }
     bqueue.push(bts);
+    SetBtn(bts);
     int step = 0;
 
     while (!bqueue.empty() && step == 0)
@@ -59,10 +79,9 @@ int main()
             vector<Button> tempbts;
             for (int j = 0; j < 9; j++)
             {
-                tempbts.push_back(bts[i]);
+                tempbts.push_back(bts[j]);
             }
-            
-            setNum = 0;
+
             tempbts[i].status++;
             if (tempbts[i].status == 5)
                 tempbts[i].status = 1;
@@ -70,23 +89,16 @@ int main()
             tempbts[num].status++;
             if (tempbts[num].status == 5)
                 tempbts[num].status = 1;
-
-            for (int j = 0; j < 9; j++)
-            {
-                Set(setNum, j * 4 + tempbts[j].status);
-                tempbts[j].step++;
-            }
-            if (setNum == POINT)
+            if (Judge(tempbts)) //如果重复
+                continue;
+            tempbts[0].step++;
+            if (JudgeOver(tempbts))
             {
                 step = tempbts[0].step;
                 break;
             }
-            //插入成功
-            if (visit.insert(setNum).second)
-            {
-
-                bqueue.push(tempbts);
-            }
+            SetBtn(tempbts);
+            bqueue.push(tempbts);
         }
     }
     if (step)
