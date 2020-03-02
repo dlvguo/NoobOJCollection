@@ -5,7 +5,7 @@ using namespace std;
 int findRepeatNumber(vector<int> &nums)
 {
     int *n=new int[nums.size()];
-    memset(n,0,sizeof(n));
+    memset(n,0,sizeof(int)*nums.size());
     for (int i = 0; i <nums.size(); i++)
     {
         if(n[nums[i]]==0)
@@ -15,7 +15,6 @@ int findRepeatNumber(vector<int> &nums)
         }
     }
     return 0;
-    
 }
 
 int main()
