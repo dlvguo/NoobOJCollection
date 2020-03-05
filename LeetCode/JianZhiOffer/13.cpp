@@ -53,12 +53,3 @@ public:
         return sum;
     }
 };
-
-int main()
-{
-    Solution s;
-    int m, n, k;
-    cin >> m >> n >> k;
-    cout << s.movingCount(m, n, k);
-    cin >> m >> n >> k;
-}
