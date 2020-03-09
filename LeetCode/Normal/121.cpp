@@ -42,7 +42,7 @@ int maxProfit(vector<int> &prices)
         }
         else
         {
-            max = prices[i];
+            n = prices[i];
         }
     }
 
