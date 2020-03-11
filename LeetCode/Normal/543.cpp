@@ -17,8 +17,8 @@ public:
     {
         if (!root)
             return 0;
-        int left = diameterOfBinaryTree(root->left);
-        int right = diameterOfBinaryTree(root->right);
+        int left = dfs(root->left);
+        int right = dfs(root->right);
         if (result < left + right)
             result = left + right;
         return left > right ? left + 1 : right + 1;
