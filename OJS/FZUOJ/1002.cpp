@@ -13,6 +13,7 @@ int main()
             num++;
             sum += 1.0 / (num + 1);
         }
-        printf("%d cars(s)\n", num);
+        printf("%d card(s)\n", num);
     }
+    return 0;
 }
