@@ -26,9 +26,25 @@ public:
     vector<vector<int>> combine(int n, int k)
     {
         if (!n)
-            return {};
+            return vts;
         vector<int> nums;
         dfsPutNums(n, 1, k, nums);
         return vts;
     }
 };
+
+int main()
+{
+    Solution s1;
+    int n, k;
+    cin >> n >> k;
+    vector<vector<int>> vts = s1.combine(n, k);
+    for (int i = 0; i < vts.size(); i++)
+    {
+        for (int j = 0; j < vts[i].size(); j++)
+        {
+            cout << vts[i][j];
+        }
+        cout << endl;
+    }
+}

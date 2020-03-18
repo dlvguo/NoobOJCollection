@@ -3,91 +3,84 @@
 #include <cstring>
 using namespace std;
 
-bool judge[12];
+char strs[3][3][15];
 
-bool Judge(string strs[3], char point)
+bool Judge(char point, int weight)
 {
-    int tag = 0; //为0 1 重 2轻
+    int tag = 0, flag = 0; //用于标记
     char ch;
     for (int j = 0; j < 3; j++)
     {
-        ch = strs[j][10];
-        if (ch != 'e')
-            for (int i = 0; i < 9; i++)
+        ch = strs[j][2][0];
+        tag = 0;
+        for (int i = 0; i < 2; i++)
+        {
+            for (int k = 0; strs[j][i][k] != '\0'; k++)
             {
-                if (i != 4)
+                if (strs[j][i][k] == point)
                 {
-                    if (strs[j][i] == point)
+                    tag = 1;
+                    flag = 1;
+                    if (ch == 'e')
+                        return false;
+                    int temp;
+                    if (i == 0)//出现在天平左边 1代表重 2代表轻
                     {
-                        int temp;
-                        if (i < 4)
-                        {
-                            if (ch = 'u')
-                                temp = 1;
-                            else
-                                temp = 2;
-                        }
+                        if (ch == 'u')
+                            temp = 1;
                         else
-                        {
-                            if (ch = 'u')
-                                temp = 2;
-                            else
-                                temp = 1;
-                        }
-                        if (tag == 0)
-                            tag = temp;
-                        else if (tag == temp)
-                            return true;
-                        else
-                            return false;
-                        break;
+                            temp = 2;
                     }
+                    else //出现在天平右边
+                    {
+                        if (ch == 'u')
+                            temp = 2;
+                        else
+                            temp = 1;
+                    }
+                    if (temp != weight)//与字符重量不符合
+                        return false;
                 }
             }
+            if (tag)
+                break;
+        }
+        if (!tag && ch != 'e')//如果目标字符不在重量不对称的天平情况下
+            return false;
     }
-    return tag;
+    return flag;//flag=0说明未出现过
 }
 
-void AddTrue(string str)
-{
-    for (int i = 0; i < 4; i++)
-    {
-        judge[str[i] - 'A'] = true;
-    }
-    for (int i = 4; i < 9; i++)
-    {
-        judge[str[i] - 'A'] = true;
-    }
-}
-
-//明天开始暴力枚举
+//终于A了
 int main()
 {
     int n;
     cin >> n;
-    getchar();
-    string strs[3];
+    bool tag;
+    string s[2] = {"heavy", "light"};
     while (n--)
     {
-        memset(judge, false, sizeof(judge));
-        getline(cin, strs[0]);
-        getline(cin, strs[1]);
-        getline(cin, strs[2]);
         for (int i = 0; i < 3; i++)
         {
-            if (strs[i][10] == 'e')
-                AddTrue(strs[i]);
+            for (int j = 0; j < 3; j++)
+            {
+                scanf("%s", strs[i][j]);
+            }
         }
         for (int i = 0; i < 12; i++)
         {
-            if (!judge[i])
+            tag = false;
+            for (int j = 0; j < 2; j++)
             {
-                if (Judge(strs, 'A' + i))
+                if (Judge('A' + i, j + 1)) //1重 2轻
                 {
-                    cout << (char)('A' + i) << " is the counterfeit coin and it is light." << endl;
+                    cout << (char)('A' + i) << " is the counterfeit coin and it is " << s[j] << '.' << endl;
+                    tag = true;
                     break;
                 }
             }
+            if (tag)
+                break;
         }
     }
     //system("pause");
