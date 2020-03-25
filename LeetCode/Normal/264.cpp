@@ -6,6 +6,7 @@ class Solution
 public:
     int nthUglyNumber(int n)
     {
+        //三指针，保存需要*2 *3 *5的数
         vector<int> nums(n, 0), index(3, 0);
         nums[0] = 1;
         for (int i = 1; i < n; i++)
