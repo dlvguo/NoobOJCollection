@@ -11,12 +11,10 @@ public:
 
     bool count(const string str1, const string str2)
     {
-        int sum = 0;
         int index = 0, point = min(str1.size(), str2.size());
         while (index < point && str1[index] == str2[index])
         {
             index++;
-            sum++;
         }
         return index == point;
     }
