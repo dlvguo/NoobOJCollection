@@ -33,8 +33,9 @@ public:
                 if (root->right)
                     q.push(root->right);
             }
+            //反转是最快的 原来左右放的时候 其实顺序是错的
             if (level % 2 == 0)
-                reverse(v.begin(),v.end());
+                reverse(v.begin(), v.end());
             level++;
             vs.push_back(v);
         }
