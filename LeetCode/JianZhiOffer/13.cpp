@@ -1,8 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
     bool figureNum(int x, int y, int k)
     {
@@ -31,15 +30,23 @@ public:
     int movingCount(int m, int n, int k)
     {
         visit[0][0] = 1;
-        int sum = 0;
-        for (int i = 0; i < m; i++)
+        int sum = 1;
+        queue<Pos> pQueue;
+        Pos p(0, 0);
+        pQueue.push(p);
+        while (!pQueue.empty())
         {
-            for (int j = 0; j < n; j++)
+            p = pQueue.front();
+            pQueue.pop();
+            for (int i = 0; i < 2; i++)
             {
-                if (figureNum(i, j, k))
-                    sum++;
-                else
-                    break;
+                int x = dir[i][0] + p.x, y = dir[i][1] + p.y;
+                if (x < 0 || x >= m || y < 0 || y >= n || visit[x][y] || !figureNum(x, y, k))
+                    continue;
+                visit[x][y] = 1;
+                sum++;
+                Pos _p(x, y);
+                pQueue.push(_p);
             }
         }
         return sum;
