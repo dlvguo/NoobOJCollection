@@ -1,18 +1,15 @@
-#define _CRT_SECURE_NO_WARNINGS 1
-
 #include <iostream>
 using namespace std;
 
-char map[101][101];
+char map[12][12];
+//0 上 1右 2下 3左
+int dir[4][2] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
 
 struct Animal
 {
     int x, y;
-    //1 上 2右 3下 4左
     int _dir;
 };
-
-int dir[5][2] = {{0, 0}, {-1, 0}, {0, 1}, {1, 0}, {0, -1}};
 
 int main()
 {
@@ -33,13 +30,13 @@ int main()
                 {
                     cat.x = i;
                     cat.y = j;
-                    cat._dir = 1;
+                    cat._dir = 0;
                 }
                 if (map[i][j] == 'm')
                 {
                     mouse.x = i;
                     mouse.y = j;
-                    mouse._dir = 1;
+                    mouse._dir = 0;
                 }
             }
             getchar();
@@ -48,26 +45,26 @@ int main()
         int _x, _y;
         while (cat.x != mouse.x || cat.y != mouse.y)
         {
+            //获取猫一下步坐标 越界或者碰见障碍就改方向
             _x = cat.x + dir[cat._dir][0];
             _y = cat.y + dir[cat._dir][1];
             if (_x < 1 || _y < 1 || _x > 10 || _y > 10 || map[_x][_y] == '*')
             {
                 cat._dir++;
-                if (cat._dir > 4)
-                    cat._dir = 1;
+                cat._dir %= 4;
             }
             else
             {
                 cat.x = _x;
                 cat.y = _y;
             }
+            //获取猫一下步坐标 越界或者碰见障碍就改方向
             _x = mouse.x + dir[mouse._dir][0];
             _y = mouse.y + dir[mouse._dir][1];
             if (_x < 1 || _y < 1 || _x > 10 || _y > 10 || map[_x][_y] == '*')
             {
                 mouse._dir++;
-                if (mouse._dir > 4)
-                    mouse._dir = 1;
+                mouse._dir %= 4;
             }
             else
             {
@@ -75,14 +72,13 @@ int main()
                 mouse.y = _y;
             }
             sum++;
+            //超过500次 认为无法抓到
             if (sum > 500)
             {
                 sum = 0;
                 break;
             }
         }
-
         cout << sum << endl;
-        /* code */
     }
 }
