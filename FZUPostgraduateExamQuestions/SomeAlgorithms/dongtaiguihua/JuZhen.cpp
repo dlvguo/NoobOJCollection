@@ -40,33 +40,33 @@ void MatrixChain(int p[], int n, int **m, int **s)
     }
 }
 
-//递归法 每个都遍历 若i==j返回0
-//并使用备忘录算法 即存储计算过的值
-int m[][], p[], n, s[][];
+// //递归法 每个都遍历 若i==j返回0
+// //并使用备忘录算法 即存储计算过的值
+// int m[][10], p[], n, s[][10];
 
-int LookMateri(int i, int j)
-{
-    if (i == j)
-        return 0;
-    else if (m[i][j])
-        return m[i][j];
-    int u = m[i + 1][j] + p[i - 1] * p[i] * [j];
-    s[i][j] = i;
-    for (int k = i + 1; k < j; k++)
-    {
-        int t = m[i][k] + m[k + 1][j] + p[i - 1] * p[k] * p[j];
-        if (u > t)
-        {
-            u = t;
-            s[i][j] = k;
-        }
-    }
-    return u;
-}
+// int LookMateri(int i, int j)
+// {
+//     if (i == j)
+//         return 0;
+//     else if (m[i][j])
+//         return m[i][j];
+//     int u = m[i + 1][j] + p[i - 1] * p[i] * [j];
+//     s[i][j] = i;
+//     for (int k = i + 1; k < j; k++)
+//     {
+//         int t = m[i][k] + m[k + 1][j] + p[i - 1] * p[k] * p[j];
+//         if (u > t)
+//         {
+//             u = t;
+//             s[i][j] = k;
+//         }
+//     }
+//     return u;
+// }
 
-void Materi(int n)
-{
-    for (int i = 1; i <= n; i++)
-        for (int j = 1; j <= n; j++)
-            LookMateri(i,j);
-}
+// void Materi(int n)
+// {
+//     for (int i = 1; i <= n; i++)
+//         for (int j = 1; j <= n; j++)
+//             LookMateri(i,j);
+// }
