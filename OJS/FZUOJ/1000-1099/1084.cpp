@@ -81,6 +81,7 @@ int main()
         printf("{");
         int index = 0;
         bool tag = 0;
+        //根据观察 把输入的数据-1 看进制所在对应的数字 比如输入 7-1=6 二进制为 110于是为{3，9}
         while (n)
         {
             if (n % 2)
