@@ -1,9 +1,10 @@
-#define  _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
+using namespace std;
 
-int N, map[1005][1005], visit[1005][1005], val[1000001], num, Max, ans;
-int dir[4][2] = { {0, 1}, {0, -1}, {1, 0}, {-1, 0} };
+int N, map[1005][1005], visit[1005][1005], val[1000001], num, res;
+int dir[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 
 //边界和访问检查
 bool check(int x, int y)
@@ -25,7 +26,7 @@ void dfs(int x, int y)
 			if (map[_x][_y] >= -1) //说明可以访问
 			{
 				if (map[_x][_y] > 0)
-					ans += map[_x][_y];
+					val[num] += map[_x][_y];
 				map[_x][_y] = num;
 				dfs(_x, _y);
 			}
@@ -46,8 +47,8 @@ void dfsMax(int x, int y)
 			if (map[_x][_y] != -2)
 			{
 				int t = map[_x][_y];
-				if (t >= 1)
-					Max = Max < val[t] ? val[t] : Max;
+				if (t >= 1 && res < val[t])
+					res = val[t];
 				dfsMax(_x, _y);
 			}
 		}
@@ -78,19 +79,23 @@ int main()
 				//说明未访问
 				if (visit[i][j] == 0 && map[i][j] >= -1)
 				{
-					ans = map[i][j] == -1 ? 0 : map[i][j];
+					if (map[i][j] > 0)
+						val[num] = map[i][j];
+					else
+					{
+						val[num] = 0;
+					}
 					map[i][j] = num;
 					visit[i][j] = 1;
-
 					dfs(i, j);
-					val[num++] = ans;
+					num++;
 				}
 			}
 		}
 		memset(visit, 0, sizeof(visit));
-		Max = 0;
+		res = 0;
 		visit[sx][sy] = 1;
 		dfsMax(sx, sy);
-		printf("%d\n", Max);
+		printf("%d\n", res);
 	}
 }
