@@ -1,10 +1,11 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
+#include <queue>
 using namespace std;
 
-int N, map[1005][1005], visit[1005][1005], val[1000001], num, res;
-int dir[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+int N, map[1005][1005], visit[1005][1005], val[1000005], num, res;
+int dir[4][2] = {0, 1, 0, -1, 1, 0, -1, 0};
 
 //边界和访问检查
 bool check(int x, int y)
@@ -14,51 +15,92 @@ bool check(int x, int y)
 	return true;
 }
 
-//计算池塘的Val 此时-2 -3当作墙
-void dfs(int x, int y)
+struct Pos
 {
-	for (int i = 0; i < 4; i++)
+	int x, y;
+};
+
+void Bfs(int x, int y)
+{
+	Pos p;
+	p.x = x;
+	p.y = y;
+	visit[x][y] = 1;
+	if (map[x][y] > 0)
+		val[num] = map[x][y];
+	else
 	{
-		int _x = x + dir[i][0], _y = y + dir[i][1];
-		if (check(_x, _y))
+		val[num] = 0;
+	}
+	map[x][y] = num;
+	queue<Pos> q;
+	q.push(p);
+	while (!q.empty())
+	{
+		p = q.front();
+		q.pop();
+		for (int i = 0; i < 4; i++)
 		{
-			visit[_x][_y] = 1;
-			if (map[_x][_y] >= -1) //说明可以访问
+			int _x = p.x + dir[i][0], _y = p.y + dir[i][1];
+			if (check(_x, _y))
 			{
-				if (map[_x][_y] > 0)
-					val[num] += map[_x][_y];
-				map[_x][_y] = num;
-				dfs(_x, _y);
+				visit[_x][_y] = 1;
+				//非墙
+				if (map[_x][_y] >= -1)
+				{
+					if (map[_x][_y] > 0)
+						val[num] += map[_x][_y];
+					map[_x][_y] = num;
+					Pos t;
+					t.x = _x;
+					t.y = _y;
+					q.push(t);
+				}
 			}
 		}
 	}
 }
 
-//计算最大值 此时-3能通过
-void dfsMax(int x, int y)
+//寻找最大值
+void BfsSearchMax(int x, int y)
 {
-	for (int i = 0; i < 4; i++)
+	Pos p;
+	p.x = x;
+	p.y = y;
+	visit[x][y] = 1;
+	res = 0;
+	queue<Pos> q;
+	q.push(p);
+	while (!q.empty())
 	{
-		int _x = x + dir[i][0], _y = y + dir[i][1];
-		if (check(_x, _y))
+		p = q.front();
+		q.pop();
+		for (int i = 0; i < 4; i++)
 		{
-			visit[_x][_y] = 1;
-			//说明可以通过
-			if (map[_x][_y] != -2)
+			int _x = p.x + dir[i][0], _y = p.y + dir[i][1];
+			if (check(_x, _y))
 			{
-				int t = map[_x][_y];
-				if (t >= 1 && res < val[t])
-					res = val[t];
-				dfsMax(_x, _y);
+				visit[_x][_y] = 1;
+				//非墙
+				if (map[_x][_y] != -2)
+				{
+					if (map[_x][_y] > 0 && res < val[map[_x][_y]])
+						res = val[map[_x][_y]];
+					Pos t;
+					t.x = _x;
+					t.y = _y;
+					q.push(t);
+				}
 			}
 		}
 	}
 }
+
 int main()
 {
 	while (scanf("%d", &N) != EOF)
 	{
-		int sx, sy;
+		int sx = 0, sy = 0;
 		for (int i = 1; i <= N; i++)
 			for (int j = 1; j <= N; j++)
 			{
@@ -79,23 +121,13 @@ int main()
 				//说明未访问
 				if (visit[i][j] == 0 && map[i][j] >= -1)
 				{
-					if (map[i][j] > 0)
-						val[num] = map[i][j];
-					else
-					{
-						val[num] = 0;
-					}
-					map[i][j] = num;
-					visit[i][j] = 1;
-					dfs(i, j);
+					Bfs(i, j);
 					num++;
 				}
 			}
 		}
 		memset(visit, 0, sizeof(visit));
-		res = 0;
-		visit[sx][sy] = 1;
-		dfsMax(sx, sy);
+		BfsSearchMax(sx, sy);
 		printf("%d\n", res);
 	}
 }
