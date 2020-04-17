@@ -1,8 +1,12 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
 #include <queue>
 using namespace std;
+
+/*
+	思路  第一步：因为-3会清空能量，一开始可以将-3和-2看成围墙，看看图中可以分割几块小图，类似LeetCode200计算岛屿数量,并给岛屿编号
+    	  第二步：从机器人出发 再一次BFS求所能经过的最大值，-3看成通路
+*/
 
 int N, map[1005][1005], visit[1005][1005], val[1000005], num, res;
 int dir[4][2] = {0, 1, 0, -1, 1, 0, -1, 0};
@@ -20,6 +24,7 @@ struct Pos
 	int x, y;
 };
 
+//第一次计算岛屿
 void Bfs(int x, int y)
 {
 	Pos p;
@@ -61,7 +66,7 @@ void Bfs(int x, int y)
 	}
 }
 
-//寻找最大值
+//第二次寻找最大值
 void BfsSearchMax(int x, int y)
 {
 	Pos p;
@@ -112,7 +117,7 @@ int main()
 					sy = j;
 				}
 			}
-		//初始化NUM
+		//num 地图编号 同一块小图编号相同
 		num = 1;
 		for (int i = 1; i <= N; i++)
 		{
