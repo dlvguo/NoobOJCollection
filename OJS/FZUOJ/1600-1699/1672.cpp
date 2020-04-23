@@ -15,16 +15,17 @@ long long _fabs(LL a, LL b)
     return -c;
 }
 
-//真TM难受 VC++可以用 lld 不然就是%I64d
+//VC++可以用lld
 int main()
 {
     int n;
-    while (scanf("%d", &n) != EOF)
+    while (~scanf("%d", &n))
     {
         for (int i = 0; i < n; i++)
         {
             scanf("%lld", &nums[i]);
         }
+        //排序
         sort(nums, nums + n);
         LL _min = -1;
         for (int i = 1; i < n; i++)
@@ -36,21 +37,13 @@ int main()
                 {
                     _min = temp;
                 }
-                else
-                {
-                    if (temp < _min)
-                        _min = temp;
-                }
+                else if (temp < _min)
+                    _min = temp;
             }
         }
+        //说明数列相同
         if (_min == -1)
-            if (nums[0] < 0)
-                _min = -nums[0];
-            else
-            {
-                _min = nums[0];
-            }
-
+            _min = nums[0] > 0 ? nums[0] : -nums[0];
         printf("%lld\n", _min);
     }
 }
