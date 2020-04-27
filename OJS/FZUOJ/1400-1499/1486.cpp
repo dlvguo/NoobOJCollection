@@ -1,4 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <queue>
 #include <stdio.h>
@@ -10,32 +11,23 @@ int dir[4][2] = {-1, 0, 1, 0, 0, -1, 0, 1};
 
 struct Pos
 {
-	int x, y, step, commNum, dir;
+	int x, y, step, dir;
 };
 
 int m, n, visit[MAX][MAX];
 char map[MAX][MAX];
 
-struct cmp
-{
-	bool operator()(Pos &x, Pos &y)
-	{
-		if (x.step == y.step)
-			return x.commNum > y.commNum;
-		return x.step > y.step;
-	}
-};
-
+//visit[x][y]==0表示墙和不能再访问的地方
 bool check(int x, int y)
 {
-	if (x < 0 || y < 0 || x >= n || y >= m || visit[x][y])
+	if (x < 0 || y < 0 || x >= n || y >= m || visit[x][y] == 0)
 		return false;
 	return true;
 }
 
 void bfs(int x, int y)
 {
-	priority_queue<Pos, vector<Pos>, cmp> pq;
+	queue<Pos> pq;
 	//四个方向先拓展下
 	for (int i = 0; i < 4; i++)
 	{
@@ -47,62 +39,41 @@ void bfs(int x, int y)
 			p.x = _x;
 			p.y = _y;
 			p.step = 1;
-			p.commNum = 1;
 			p.dir = i;
+			visit[_x][_y] = 1;
+
 			if (map[_x][_y] == 't')
 			{
-				printf("%d\n", p.step);
 				return;
 			}
 			pq.push(p);
-			visit[_x][_y] = 1;
+			//表示经过这里的最小访问次数
 		}
 	}
 
 	while (pq.size())
 	{
-		Pos t = pq.top();
+		Pos t = pq.front();
 		pq.pop();
-		cout << t.x << ' ' << t.y << ' ' << t.step << endl;
-		//先扩展同方向的？
-		int _x = t.x + dir[t.dir][0], _y = dir[t.dir][1] + t.y;
-		if (check(_x, _y))
-		{ //说明可放入
-			Pos p;
-			p.x = _x;
-			p.y = _y;
-			p.dir = t.dir;
-			p.step = t.step;
-			if (map[_x][_y] == 't')
-			{
-				printf("%d\n", p.step);
-				return;
-			}
-			p.commNum = t.commNum + 1;
-			pq.push(p);
-			visit[_x][_y] = 1;
-		}
 
 		for (int i = 0; i < 4; i++)
 		{
-			if (i != t.dir)
-			{
-				_x = t.x + dir[i][0], _y = dir[i][1] + t.y;
-				if (check(_x, _y))
-				{ //说明可放入
-					Pos p;
-					p.x = _x;
-					p.y = _y;
-					p.dir = i;
+			int _x = t.x + dir[i][0], _y = dir[i][1] + t.y;
+			if (check(_x, _y))
+			{ //说明可放入
+				Pos p;
+				p.x = _x;
+				p.y = _y;
+				p.dir = i;
+				if (p.dir == t.dir)
+					p.step = t.step;
+				else
 					p.step = t.step + 1;
-					if (map[_x][_y] == 't')
-					{
-						printf("%d\n", p.step);
-						return;
-					}
-					p.commNum = t.commNum + 1;
+				//未访问过
+				if (visit[_x][_y] == -1 || p.step <= visit[_x][_y])
+				{
+					visit[_x][_y] = p.step;
 					pq.push(p);
-					visit[_x][_y] = 1;
 				}
 			}
 		}
@@ -124,14 +95,17 @@ int main()
 				{
 					sx = i;
 					sy = j;
+					//表示访问过为不可再访问
 					visit[i][j] = 1;
 				}
 				else if (map[i][j] == '#')
 				{
+					//表示访问过为墙
 					visit[i][j] = 1;
 				}
-				else
+				else //表示未访问过
 				{
+
 					visit[i][j] = 0;
 				}
 			}

@@ -1,3 +1,3 @@
-﻿2271 dist算出来 2205   1489 1901 2186 2029   枚举dp1018难题 2129看下dp
+﻿2271 dist算出来 2205  1409 2082 1481 1489 1901 2186 2029 2253    枚举dp1018难题 2129看下dp
 
-//4.27做  1409 2082 1481  1486参考HDU1782 https://blog.csdn.net/weixin_44820625/article/details/105005601
+//4.28做  2个水题+  2134 1486参考HDU1782 https://blog.csdn.net/weixin_44820625/article/details/105005601 https://blog.csdn.net/qq_38749759/article/details/76339405 搜索最少转弯问题BFS
