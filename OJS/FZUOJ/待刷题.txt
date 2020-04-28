@@ -1,3 +1,4 @@
 ﻿2271 dist算出来  1409 2082 1481 1489 1901 2186 2029 2253    枚举dp1018难题 2129看下dp
 
-//4.28做  2个水题+  1486参考HDU1782 https://blog.csdn.net/weixin_44820625/article/details/105005601 https://blog.csdn.net/qq_38749759/article/details/76339405 搜索最少转弯问题BFS
+//4.28做  2个水题+  1486参考HDU1782 https://blog.csdn.net/weixin_44820625/article/details/105005601 https://blog.csdn.net/qq_38749759/article/details/76339405 搜索最少转弯问题BFS 
+https://blog.csdn.net/kkkkahlua/article/details/75579327?depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-4&utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-4
