@@ -20,7 +20,7 @@ public:
         while (low < high)
         {
             int mid = (low + high) / 2;
-            //说明是在上升序列
+            //说明是在上升序列g
             if (mountainArr.get(mid) < mountainArr.get(mid + 1))
             {
                 low = mid + 1;
