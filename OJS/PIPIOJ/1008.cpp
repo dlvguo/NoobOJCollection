@@ -2,7 +2,7 @@
 #include <stdio.h>
 using namespace std;
 
-typedef long long ll;
+typedef long long LL;
 int arr[100001], dp[100001];
 
 bool Max(int a, int b)
@@ -20,7 +20,7 @@ int main()
         {
             scanf("%d", &arr[i]);
         }
-        ll max = 0;
+        LL max = 0;
         dp[0] = arr[0];
         int temp = 0;
         for (int i = 1; i < k; i++)
