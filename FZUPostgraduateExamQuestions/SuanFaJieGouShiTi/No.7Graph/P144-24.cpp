@@ -47,6 +47,10 @@ void Cout(MGraph g)
     for (int i = 1; i <= nodes(g); i++)
     {
         if (visit[i] == 0)
-            bfs(i);
+            bfs(i, g);
     }
+}
+
+int main()
+{
 }
