@@ -11,6 +11,7 @@ public:
         for (int i = 0; i < len; ++i)
         {
             char x = s[i], y = t[i];
+            //如果存在映射 不同就返回
             if ((s2t.count(x) && s2t[x] != y) || (t2s.count(y) && t2s[y] != x))
             {
                 return false;
