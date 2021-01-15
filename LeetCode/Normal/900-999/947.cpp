@@ -3,6 +3,7 @@ using namespace std;
 class Solution
 {
 public:
+    //并查集集合
     int find(vector<int> &set, int x)
     {
         return set[x] == -1 ? x : set[x] = find(set, set[x]);
