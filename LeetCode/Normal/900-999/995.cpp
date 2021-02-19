@@ -5,22 +5,23 @@ class Solution
 public:
     int minKBitFlips(vector<int> &A, int K)
     {
-        int N = A.size();
-        queue<int> que;
+        int len = A.size();
+        queue<int> q;
         int res = 0;
-        for (int i = 0; i < N; ++i)
+        for (int i = 0; i < len; i++)
         {
-            if (!que.empty() && i >= que.front() + K)
+            // 当前滑动窗口滑动过程中要保持新位置j<i+K 保持K长度  超出需要删除队首元素
+            if (!q.empty() && i >= q.front() + K)
             {
-                que.pop();
+                q.pop();
             }
-            if (que.size() % 2 == A[i])
+            if (q.size() % 2 == A[i])
             {
-                if (i + K > N)
+                if (i + K > len)
                 {
                     return -1;
                 }
-                que.push(i);
+                q.push(i);
                 res++;
             }
         }
