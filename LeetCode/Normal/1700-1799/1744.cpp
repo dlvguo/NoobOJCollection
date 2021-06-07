@@ -22,12 +22,10 @@ public:
         for (const auto &q : queries)
         {
             int favoriteType = q[0], favoriteDay = q[1], dailyCap = q[2];
-
             LL x1 = favoriteDay + 1;
             LL y1 = (LL)(favoriteDay + 1) * dailyCap;
             LL x2 = (favoriteType == 0 ? 1 : sum[favoriteType - 1] + 1);
             LL y2 = sum[favoriteType];
-
             ans.push_back(!(x1 > y2 || y1 < x2));
         }
         return ans;
