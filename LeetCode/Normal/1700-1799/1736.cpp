@@ -21,8 +21,9 @@ public:
     }
 };
 
-int main(){
+int main()
+{
     Solution s;
-    string t="??:3?";
-    cout<<s.maximumTime(t);
+    string t = "??:3?";
+    cout << s.maximumTime(t);
 }
