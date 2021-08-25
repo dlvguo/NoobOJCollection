@@ -10,15 +10,26 @@ public:
     {
         vector<int> p = {0};
         n = graph.size();
+        dfs(p, 0, graph);
         return vts;
     }
 
-    void dfs(vector<int> &p, int src, vector<vector<int>> &graph)
+    void dfs(vector<int> p, int src, vector<vector<int>> &graph)
     {
-        vis[src] = 1;
-        for (int i = 0; i < graph.size(); i++)
+        if (src == n - 1)
         {
-            /* code */
+            vts.push_back(p);
+            return;
         }
+        vis[src] = 1;
+        for (auto tar : graph[src])
+        {
+            if (vis[tar])
+                continue;
+            p.push_back(tar);
+            dfs(p, tar, graph);
+            p.pop_back();
+        }
+        vis[src] = 0;
     }
 };
