@@ -22,10 +22,3 @@ public:
         return ans;
     }
 };
-
-int main()
-{
-    vector<int> arr = {1, 4, 2, 5, 3};
-    Solution s;
-    cout << s.sumOddLengthSubarrays(arr);
-}
