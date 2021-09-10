@@ -69,6 +69,24 @@ int strStr(string haystack, string needle)
     return -1;
 }
 
+vector<int> getNext(string pat){
+ //KMP计算next数组
+    vector<int> next(pat.size(), 0);
+    //获取next数组
+    int j = 0; //代表前缀和后缀最长的数组
+
+    for (int i = 1; i < pat.size(); i++)
+    {
+        while (j > 0 && pat[j] != pat[i])
+        {
+            j = next[j - 1];
+        }
+        if (pat[j] == pat[i])
+            next[i] = ++j;
+    }
+    return next;
+}
+
 int main()
 {
     //

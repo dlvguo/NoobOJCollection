@@ -17,6 +17,6 @@ public:
                 next[i] = ++j;
         }
         //注意求0
-        return next.back()!=0&& s.size() % (s.size() - next.back()) == 0;
+        return next.back() != 0 && s.size() % (s.size() - next.back()) == 0;
     }
 };
