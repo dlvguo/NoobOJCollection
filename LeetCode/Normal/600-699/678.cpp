@@ -10,13 +10,12 @@ public:
         {
             if (s[i] == '(')
                 lnum++;
-            else if (s[i] == '*'){
-                if(lnum==0)
+            else if (s[i] == '*')
+            {
+                if (lnum == 0)
                 {
-                    
                 }
             }
-                
             else
             {
                 if (lnum)
