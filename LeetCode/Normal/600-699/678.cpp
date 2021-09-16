@@ -1,40 +1,68 @@
 #include <bits/stdc++.h>
 using namespace std;
+// class Solution
+// {
+// public:
+//     bool checkValidString(string s)
+//     {
+//         stack<int> ls, xs;
+//         for (int i = 0; i < s.size(); i++)
+//         {
+//             if (s[i] == '(')
+//             {
+//                 ls.push(i);
+//             }
+//             else if (s[i] == '*')
+//             {
+//                 xs.push(i);
+//             }
+//             else
+//             {
+//                 if (ls.size())
+//                 {
+//                     ls.pop();
+//                 }
+//                 else if (xs.size())
+//                     xs.pop();
+//                 else
+//                     return false;
+//             }
+//         }
+//         while (ls.size() && xs.size() && ls.top() < xs.top())
+//         {
+//             ls.pop();
+//             xs.pop();
+//         }
+//         return ls.empty();
+//     }
+// };
+
 class Solution
 {
 public:
     bool checkValidString(string s)
     {
-        int lnum = 0, rnum = 0, xnum = 0;
+        int minc = 0, maxc = 0;
         for (int i = 0; i < s.size(); i++)
         {
             if (s[i] == '(')
-                lnum++;
+            {
+                minc++;
+                maxc++;
+            }
             else if (s[i] == '*')
             {
-                if (lnum == 0)
-                {
-                }
+                minc = minc ? minc - 1 : 0;
+                maxc++;
             }
             else
             {
-                if (lnum)
-                    lnum--;
-                else if (xnum)
-                    xnum--;
-                else
+                minc = minc ? minc - 1 : 0;
+                maxc--;
+                if (maxc < 0)
                     return false;
             }
         }
-        if (lnum)
-            return false;
-        return true;
+        return minc == 0;
     }
 };
-
-int main()
-{
-    string s = "****(((*(";
-    Solution s1;
-    cout << s1.checkValidString(s);
-}

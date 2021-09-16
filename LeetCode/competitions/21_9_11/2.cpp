@@ -6,41 +6,37 @@ public:
     int maxmiumScore(vector<int> &cards, int cnt)
     {
         sort(cards.rbegin(), cards.rend());
-        //遇见奇数可能考虑 去除最后面的一个偶数或者最后一个奇数
-        int res = 0, len = cnt, lsto = -1, lste = -1;
+        int ans = 0, prej = -1, preo = -1, lstj = -1, lsto = -1;
         for (int i = 0; i < cnt; i++)
         {
-            res += cards[i];
+            ans += cards[i];
+            //说明奇数
             if (cards[i] % 2)
-                lsto = i;
+                prej = i;
             else
-                lste = i;
+                preo = i;
         }
-        if (res % 2 == 0)
-            res;
-        //去除奇数 找到后面的偶数
-        int nres = res - cards[lsto];
-        bool nrestag = false;
+        if (ans % 2 == 0)
+            return ans;
         for (int i = cnt; i < cards.size(); i++)
         {
-            if (cards[i] % 2 == 0)
-            {
-                nrestag = true;
-                nres += cards[i];
-            }
+            //说明奇数
+            if (cards[i] % 2 && lstj == -1)
+                lstj = i;
+            if (cards[i] % 2 == 0 && lsto == -1)
+                lsto = i;
+            if (lstj != -1 && lsto != -1)
+                break;
         }
-        if (nrestag == false)
-            nres = 0;
-
-        //去除偶数 找到后面奇数
-        if (lste == -1)
-            return nres;
+        int nres = 0;
+        if (prej != -1 && lsto != -1)
+        {
+            nres = ans - cards[prej] + cards[lsto];
+        }
+        if (preo != -1 && lstj != -1)
+        {
+            nres = max(nres, ans - cards[preo] + cards[lstj]);
+        }
+        return nres;
     }
 };
-
-int main()
-{
-    Solution s;
-    vector<int> v = {3, 3, 1};
-    cout << s.maxmiumScore(v, 1);
-}
