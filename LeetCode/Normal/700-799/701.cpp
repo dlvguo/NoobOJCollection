@@ -19,7 +19,6 @@ public:
         if (!root)
         {
             root = new TreeNode(val);
-            return root;
         }
         else if (root->val >= val)
         {
