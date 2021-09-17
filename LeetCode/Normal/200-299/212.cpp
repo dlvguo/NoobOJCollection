@@ -17,8 +17,13 @@ public:
             int _y = dir[i][1] + y;
             if (_x < 0 || _y < 0 || _x >= board.size() || _y >= board[0].size() || vis[_x][_y] || board[_x][_y] != s[index])
                 continue;
+            vis[_x][_y] = 1;
             if (dfs(_x, _y, index + 1, s, board))
+            {
+                vis[_x][_y] = 0;
                 return true;
+            }
+            vis[_x][_y] = 0;
         }
         return false;
     }
@@ -36,9 +41,13 @@ public:
                     mb[c].push_back(i);
                     mb[c].push_back(j);
                 }
+                else
+                {
+                    vector<int> v{i, j};
+                    mb[c] = v;
+                }
             }
         }
-
         for (int i = 0; i < words.size(); i++)
         {
             string s = words[i];
@@ -49,11 +58,14 @@ public:
                 auto v = mb[c];
                 for (int j = 0; j < v.size(); j += 2)
                 {
+                    vis[v[j]][v[j + 1]] = 1;
                     if (dfs(v[j], v[j + 1], 1, s, board))
                     {
                         vts.push_back(s);
+                        vis[v[j]][v[j + 1]] = 0;
                         break;
                     }
+                    vis[v[j]][v[j + 1]] = 0;
                 }
             }
         }
@@ -64,7 +76,15 @@ public:
 int main()
 {
     vector<vector<char>> board;
-    vector
-    [ [ "o", "a", "a", "n" ], [ "e", "t", "a", "e" ], [ "i", "h", "k", "r" ], [ "i", "f", "l", "v" ] ];
+    vector<char> vc = {'o', 'a', 'a', 'n'};
+    board.push_back(vc);
+    vector<char> vc2 = {'e', 't', 'a', 'e'};
+    board.push_back(vc2);
+    vector<char> vc3 = {'i', 'h', 'k', 'r'};
+    board.push_back(vc3);
+    vector<char> vc4 = {'i', 'f', 'l', 'v'};
+    board.push_back(vc4);
     vector<string> v = {"oath", "pea", "eat", "rain"};
+    Solution s;
+    s.findWords(board, v);
 }
