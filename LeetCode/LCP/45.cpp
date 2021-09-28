@@ -18,9 +18,7 @@ public:
         used[position[0]][position[1]].insert(1);
         vector<vector<int>> res;
         queue<vector<int>> q;
-
         int dir[4][2] = {0, 1, 0, -1, 1, 0, -1, 0};
-
         q.push({position[0], position[1], 1});
         while (q.size())
         {
