@@ -1,7 +1,7 @@
 # NoobOJCollection
 > 记录小菜的刷题集合
 
-1. [LeetCode刷题集合](https://github.com/dlvguo/NoobOJCollection/tree/master/Interviews)
+1. [LeetCode刷题集合](https://github.com/dlvguo/NoobOJCollection/tree/master/LeetCode)
 2. [常见OJ](https://github.com/dlvguo/NoobOJCollection/tree/master/OJS)
    - [Codeforces](https://github.com/dlvguo/NoobOJCollection/tree/master/OJS/CF) 
    - [福州大学FZU](https://github.com/dlvguo/NoobOJCollection/tree/master/OJS/FZUOJ)
