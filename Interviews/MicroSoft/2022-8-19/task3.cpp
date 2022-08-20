@@ -1,17 +1,21 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/**
+ * 思路：根据拓扑排序的思想，因为是有向图，每次把度为1的放入队列，0不放进去，因为N-1条边，能保证每次做外部的节点只有度为1
+ * degree表示存放节点的度，节点出去将度减去
+ * people表示该节点的人数，每次更新点要把原来的人放入新的点，注意统计燃油的时候/5
+ **/
 int solution(vector<int> &A, vector<int> &B)
 {
+    // 构造无向图
     unordered_map<int, unordered_set<int>> graph;
-
     vector<int> degree(A.size() + 1, 0);
     vector<int> people(A.size() + 1, 1);
     int num = 0;
     int N = A.size();
     for (int i = 0; i < N; i++)
     {
-
         int a = A[i], b = B[i];
         degree[a]++;
         degree[b]++;
@@ -39,9 +43,7 @@ int solution(vector<int> &A, vector<int> &B)
             q.pop();
             //加上燃油
             res += ((4 + people[node]) / 5);
-
             //找到对应的值
-            // auto it=
             int pnode = *graph[node].begin();
             degree[pnode]--;
             graph[pnode].erase(node);
@@ -53,10 +55,4 @@ int solution(vector<int> &A, vector<int> &B)
         }
     }
     return res;
-}
-
-int main()
-{
-    vector<int> A = {0}, B = {1};
-    cout << solution(A, B);
 }
