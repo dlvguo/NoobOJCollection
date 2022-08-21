@@ -29,13 +29,6 @@ string solution(string &S)
         nodes[num].num++;
     }
 
-    for (int i = 0; i < 10; i++)
-    {
-        // 变为偶数 其次 1 的话就不减了
-        if (nodes[i].num > 2 && nodes[i].num % 2)
-            nodes[i].num--;
-    }
-
     vector<node> nnodes;
     // 从大往后放 存放次数超过>=2的数
     for (int i = 9; i >= 0; i--)
@@ -75,7 +68,7 @@ string solution(string &S)
     for (int i = 9; i >= 0; i--)
     {
         // 这个就是构成全栈的
-        if (nodes[i].num == 1)
+        if (nodes[i].num % 2)
         {
             res.push_back('0' + i);
             break;

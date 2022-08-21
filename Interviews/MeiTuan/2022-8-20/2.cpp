@@ -25,7 +25,6 @@ int main()
     for (int i = 1; i <= n; i++)
     {
         // 目标点
-
         int p = dis[0] - abs(z[0][0] - i);
         // 因为这个肯定大于0
         if (p < 0 || p > n)

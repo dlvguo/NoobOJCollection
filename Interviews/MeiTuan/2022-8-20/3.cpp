@@ -46,5 +46,5 @@ int main()
         ans += pq.top();
         pq.pop();
     }
-    printf("%.2lf\n",ans);
+    printf("%.2lf\n", ans);
 }
