@@ -3,6 +3,13 @@ using namespace std;
 
 vector<int> a, b;
 
+// 编辑距离2
+
+// a  1 2 3
+// b  4 5 6 7
+
+//   1 3
+//   4
 typedef long long LL;
 LL figure(int as, int ae, int bs, int be)
 {

@@ -1,6 +1,16 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/**
+ * 给2个数组
+ * k = 2
+ * 50 70 90
+ * 90 80 100
+ * 0.5*90+0.7*80+0.9*100=期望分数
+ * 1*90+
+ **/
+
+
 int main()
 {
     int n, m;
@@ -11,12 +21,6 @@ int main()
         int b;
         cin >> b;
         p[i] = b;
-    }
-    for (int i = 0; i < n; i++)
-    {
-        int b;
-        cin >> b;
-        s[i] = b;
     }
 
     double ans = 0;
