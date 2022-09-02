@@ -63,6 +63,7 @@ void MaxBigDui(int a[],int n)
         AdjustUp(a,n-i-1);
     }
     //数组转置
+    
     for (int i = 1; i <n/2; i++)
     {
         swap(a[i],a[n-i+1]);
