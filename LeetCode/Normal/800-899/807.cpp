@@ -27,3 +27,10 @@ public:
         return ans;
     }
 };
+
+// int main(){
+//     Solution s;
+//     //输入的数据
+
+//     s.maxIncreaseKeepingSkyline();
+// }

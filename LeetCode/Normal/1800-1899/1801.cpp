@@ -8,6 +8,7 @@ public:
         const int MOD = 1000000007;
         priority_queue<pair<int, int>, vector<pair<int, int>>, less<pair<int, int>>> buyOrders;
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> sellOrders;
+        //m*n
         for (auto &&order : orders)
         {
             int price = order[0], amount = order[1], orderType = order[2];
